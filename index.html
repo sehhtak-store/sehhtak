@@ -1,457 +1,299 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html -->
+<!-- saved from url=(0063)file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html -->
 <html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>صحتك • Sehhtak — مستلزمات طبية</title>
-<meta name="description" content="مستلزمات طبية أصلية — أجهزة قياس السكر والضغط والأكسجين. توصيل لبيتك مع استشارة صيدلي مجاناً.">
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="blob:null/acd57b0c-64da-4af6-9a21-5f10b07c9ee2" id="manifest-link">
+<title>صحتك • Sehhtak</title>
+<meta name="description" content="مستلزمات طبية أصلية — توصيل لبيتك مع استشارة صيدلي مجاناً">
 <meta name="theme-color" content="#0D1F4E">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="صحتك">
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap');
+:root{
+  --navy:#0D1F4E;--blue:#1565C0;--cyan:#00ACC1;--teal:#00796B;
+  --white:#FFFFFF;--gray-50:#F8FAFC;--gray-100:#F1F5F9;--gray-200:#E2E8F0;
+  --gray-400:#94A3B8;--gray-600:#475569;--gray-900:#0F172A;
+  --green:#16A34A;--orange:#EA580C;--red:#DC2626;--wa:#25D366;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh;overflow-x:hidden}
 
-:root {
-  --navy: #0D1F4E;
-  --blue: #1565C0;
-  --cyan: #00ACC1;
-  --teal: #00796B;
-  --white: #FFFFFF;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-400: #94A3B8;
-  --gray-600: #475569;
-  --gray-900: #0F172A;
-  --green: #16A34A;
-  --orange: #EA580C;
-  --red: #DC2626;
-  --wa: #25D366;
-}
+/* LOADING */
+#loading{position:fixed;inset:0;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+#loading.hide{opacity:0;pointer-events:none}
+.loading-logo{font-size:48px;margin-bottom:16px;animation:bounce 1s infinite}
+.loading-text{color:var(--cyan);font-size:18px;font-weight:800}
+.loading-sub{color:rgba(255,255,255,.5);font-size:12px;margin-top:6px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+/* ADMIN */
+#admin-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+#admin-overlay.show{display:flex}
+.admin-box{background:var(--white);border-radius:20px;width:100%;max-width:480px;padding:22px;margin:auto}
+.admin-title{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.admin-close{background:var(--gray-100);border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer}
+.admin-tabs{display:flex;gap:8px;margin-bottom:16px}
+.admin-tab{flex:1;padding:9px;border-radius:10px;border:1.5px solid var(--gray-200);background:var(--white);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;color:var(--gray-600);cursor:pointer;transition:all .2s}
+.admin-tab.active{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.admin-section{display:none}.admin-section.show{display:block}
+.admin-field{margin-bottom:12px}
+.admin-field label{display:block;font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:4px}
+.admin-field input,.admin-field select,.admin-field textarea{width:100%;border:1.5px solid var(--gray-200);border-radius:9px;padding:9px 11px;font-family:'Cairo',sans-serif;font-size:13px;outline:none;transition:border-color .2s;background:var(--gray-50)}
+.admin-field input:focus,.admin-field select:focus,.admin-field textarea:focus{border-color:var(--blue);background:var(--white)}
+.admin-field textarea{resize:vertical;min-height:60px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-save{width:100%;background:linear-gradient(135deg,var(--navy),var(--blue));color:var(--white);border:none;padding:13px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:12px;transition:all .2s}
+.btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(13,31,78,.3)}
+.btn-save:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;transform:none}
+.btn-danger{background:var(--red);color:var(--white);border:none;padding:7px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.admin-product-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-200);margin-bottom:8px}
+.admin-product-info .name{font-size:12px;font-weight:800;color:var(--navy)}
+.admin-product-info .price{font-size:11px;color:var(--blue);font-weight:700}
+.admin-divider{height:1px;background:var(--gray-200);margin:14px 0}
+.success-msg{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:10px 14px;font-size:12px;color:#16a34a;font-weight:700;margin-bottom:12px;display:none}
+.error-msg{background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;font-size:12px;color:#dc2626;font-weight:700;margin-bottom:12px;display:none}
 
-body {
-  font-family: 'Cairo', sans-serif;
-  background: var(--gray-50);
-  color: var(--gray-900);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* TOPBAR */
+.topbar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.brand{display:flex;align-items:center;gap:8px}
+.brand-icon{width:32px;height:32px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand-name{font-size:16px;font-weight:900;color:var(--navy)}
+.brand-name span{color:var(--cyan)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:var(--gray-100);border:none;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .2s}
+.icon-btn:hover{background:var(--gray-200)}
+.wa-btn{background:var(--wa);color:var(--white);border:none;padding:6px 14px;border-radius:20px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px}
 
-/* ── ADMIN PANEL ── */
-#admin-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center;
-}
-#admin-overlay.show { display: flex; }
-.admin-box {
-  background: var(--white); border-radius: 20px;
-  width: 92%; max-width: 480px; max-height: 88vh;
-  overflow-y: auto; padding: 24px;
-}
-.admin-title { font-size: 18px; font-weight: 900; color: var(--navy); margin-bottom: 18px; }
-.admin-field { margin-bottom: 14px; }
-.admin-field label { display: block; font-size: 12px; font-weight: 700; color: var(--gray-600); margin-bottom: 5px; }
-.admin-field input, .admin-field select, .admin-field textarea {
-  width: 100%; border: 1.5px solid var(--gray-200); border-radius: 10px;
-  padding: 10px 12px; font-family: 'Cairo', sans-serif; font-size: 13px;
-  outline: none; transition: border-color .2s;
-}
-.admin-field input:focus, .admin-field select:focus, .admin-field textarea:focus { border-color: var(--blue); }
-.admin-field textarea { resize: vertical; min-height: 70px; }
-.admin-btns { display: flex; gap: 10px; margin-top: 18px; }
-.btn-save {
-  flex: 1; background: linear-gradient(135deg, var(--navy), var(--blue));
-  color: var(--white); border: none; padding: 13px; border-radius: 12px;
-  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 800; cursor: pointer;
-}
-.btn-cancel {
-  background: var(--gray-100); color: var(--gray-600); border: none; padding: 13px 20px;
-  border-radius: 12px; font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;
-}
-.products-list-admin { margin-bottom: 16px; }
-.admin-product-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 12px; background: var(--gray-50); border-radius: 10px;
-  border: 1px solid var(--gray-200); margin-bottom: 8px;
-}
-.admin-product-name { font-size: 13px; font-weight: 700; color: var(--navy); }
-.admin-product-price { font-size: 12px; color: var(--blue); font-weight: 700; }
-.btn-delete { background: var(--red-l,#fee2e2); color: var(--red); border: none; padding: 5px 10px; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; }
-.btn-add-new {
-  width: 100%; background: var(--gray-50); border: 2px dashed var(--gray-200);
-  border-radius: 12px; padding: 12px; font-family: 'Cairo', sans-serif;
-  font-size: 13px; font-weight: 700; color: var(--blue); cursor: pointer;
-  transition: all .2s; margin-bottom: 14px;
-}
-.btn-add-new:hover { border-color: var(--blue); background: var(--gray-100); }
-.admin-section-title { font-size: 13px; font-weight: 800; color: var(--navy); margin: 14px 0 8px; }
-.admin-divider { height: 1px; background: var(--gray-200); margin: 14px 0; }
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1a3a7c 50%,var(--blue) 100%);padding:26px 20px 22px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(0,172,193,.15),transparent 60%)}
+.hero-content{position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:4px 14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px}
+.hero h1{font-size:24px;font-weight:900;color:var(--white);margin-bottom:5px;letter-spacing:-.5px}
+.hero h1 span{color:#67e8f9}
+.hero p{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:14px}
+.hero-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.hero-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700}
 
-/* ── TOPBAR ── */
-.topbar {
-  background: var(--white); border-bottom: 1px solid var(--gray-200);
-  padding: 0 16px; height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,.06);
-}
-.brand { display: flex; align-items: center; gap: 8px; }
-.brand-icon { width: 32px; height: 32px; background: var(--navy); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.brand-name { font-size: 16px; font-weight: 900; color: var(--navy); }
-.brand-name span { color: var(--cyan); }
-.topbar-actions { display: flex; align-items: center; gap: 8px; }
-.admin-btn {
-  background: var(--gray-100); border: none; width: 34px; height: 34px;
-  border-radius: 9px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 16px; transition: background .2s;
-}
-.admin-btn:hover { background: var(--gray-200); }
-.wa-topbar {
-  background: var(--wa); color: var(--white); border: none;
-  padding: 6px 14px; border-radius: 20px; font-family: 'Cairo', sans-serif;
-  font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;
-}
+/* WA BAR */
+.wa-bar{background:var(--wa);padding:11px 20px;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.wa-bar span{color:var(--white);font-size:13px;font-weight:800}
 
-/* ── HERO ── */
-.hero {
-  background: linear-gradient(135deg, var(--navy) 0%, #1a3a7c 50%, var(--blue) 100%);
-  padding: 28px 20px 24px; text-align: center; position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(0,172,193,.15), transparent 60%),
-              radial-gradient(ellipse at 70% 50%, rgba(0,121,107,.1), transparent 60%);
-}
-.hero-content { position: relative; z-index: 2; }
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
-  border-radius: 50px; padding: 4px 14px; font-size: 11px; font-weight: 700;
-  color: rgba(255,255,255,.85); letter-spacing: .5px; margin-bottom: 12px;
-}
-.hero h1 { font-size: 26px; font-weight: 900; color: var(--white); margin-bottom: 6px; letter-spacing: -.5px; }
-.hero h1 span { color: #67e8f9; }
-.hero p { font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 16px; }
-.hero-badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.hero-badge {
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-  color: var(--white); padding: 5px 12px; border-radius: 50px; font-size: 11px; font-weight: 700;
-}
+/* SOCIAL BAR */
+.social-bar{background:var(--navy);padding:9px 16px;display:flex;align-items:center;justify-content:center;gap:10px}
+.social-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:var(--white);padding:5px 12px;border-radius:50px;font-size:11px;font-weight:700;text-decoration:none;transition:all .2s;cursor:pointer}
+.social-btn:hover{background:rgba(255,255,255,.2)}
+.social-label{font-size:10px;color:rgba(255,255,255,.4)}
 
-/* ── WA BAR ── */
-.wa-bar {
-  background: var(--wa); padding: 11px 20px; text-align: center; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  text-decoration: none;
-}
-.wa-bar span { color: var(--white); font-size: 13px; font-weight: 800; }
+/* FILTERS */
+.filters-wrap{padding:14px 16px 0;overflow-x:auto;display:flex;gap:8px;-webkit-overflow-scrolling:touch}
+.filters-wrap::-webkit-scrollbar{display:none}
+.filter-btn{background:var(--white);border:1.5px solid var(--gray-200);color:var(--gray-600);padding:7px 14px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Cairo',sans-serif;transition:all .2s;flex-shrink:0}
+.filter-btn.active,.filter-btn:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
 
-/* ── SOCIAL BAR ── */
-.social-bar {
-  background: var(--navy); padding: 10px 20px;
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-}
-.social-btn {
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
-  color: var(--white); padding: 6px 14px; border-radius: 50px;
-  font-size: 11px; font-weight: 700; text-decoration: none; transition: all .2s;
-}
-.social-btn:hover { background: rgba(255,255,255,.2); }
-.social-label { font-size: 11px; color: rgba(255,255,255,.5); }
+/* MAIN */
+.main{padding:0 16px 80px}
 
-/* ── FILTERS ── */
-.filters-wrap { padding: 14px 16px 0; overflow-x: auto; display: flex; gap: 8px; -webkit-overflow-scrolling: touch; }
-.filters-wrap::-webkit-scrollbar { display: none; }
-.filter-btn {
-  background: var(--white); border: 1.5px solid var(--gray-200);
-  color: var(--gray-600); padding: 7px 16px; border-radius: 50px;
-  font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
-  font-family: 'Cairo', sans-serif; transition: all .2s; flex-shrink: 0;
-}
-.filter-btn.active, .filter-btn:hover { background: var(--navy); border-color: var(--navy); color: var(--white); }
+/* SECTION */
+.section{padding-top:18px}
+.section-title{font-size:14px;font-weight:900;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-line{flex:1;height:1.5px;background:linear-gradient(to left,transparent,var(--gray-200))}
 
-/* ── MAIN ── */
-.main { padding: 0 16px 80px; }
+/* PRODUCT GRID */
+.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 
-/* ── SECTION ── */
-.section { padding-top: 20px; }
-.section-title { font-size: 15px; font-weight: 900; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.section-line { flex: 1; height: 1.5px; background: linear-gradient(to left, transparent, var(--gray-200)); }
+/* PRODUCT CARD */
+.product-card{background:var(--white);border-radius:16px;border:1px solid var(--gray-200);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s}
+.product-card:active{transform:scale(.98)}
+.product-img{height:115px;display:flex;align-items:center;justify-content:center;position:relative;font-size:46px}
+.product-badge{position:absolute;top:7px;right:7px;font-size:9px;font-weight:800;padding:2px 7px;border-radius:50px}
+.badge-best{background:#fef3c7;color:#d97706}
+.badge-hot{background:#fee2e2;color:#dc2626}
+.badge-new{background:#dcfce7;color:#16a34a}
+.product-info{padding:10px 11px}
+.product-name{font-size:11.5px;font-weight:800;color:var(--navy);margin-bottom:2px;line-height:1.4}
+.product-desc{font-size:10px;color:var(--gray-400);margin-bottom:7px;line-height:1.4}
+.product-features{margin-bottom:7px}
+.feat{font-size:9.5px;color:var(--gray-600);display:flex;align-items:center;gap:3px;margin-bottom:2px}
+.feat::before{content:'✓';color:var(--cyan);font-weight:800;font-size:9px}
+.price-row{display:flex;align-items:center;justify-content:space-between}
+.price{font-size:14px;font-weight:900;color:var(--blue)}
+.price-old{font-size:9px;color:var(--gray-400);text-decoration:line-through}
+.order-btn{background:var(--navy);color:var(--white);border:none;padding:6px 11px;border-radius:9px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
+.order-btn:hover{background:var(--blue)}
 
-/* ── PRODUCT GRID ── */
-.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+/* BUNDLE */
+.bundle-card{background:var(--white);border-radius:16px;border:2px solid var(--cyan);margin-bottom:11px;overflow:hidden}
+.bundle-header{background:linear-gradient(135deg,var(--navy),var(--blue));padding:12px 15px;display:flex;align-items:center;justify-content:space-between}
+.bundle-title{font-size:13px;font-weight:800;color:var(--white)}
+.bundle-save{background:var(--cyan);color:var(--white);font-size:9px;font-weight:800;padding:3px 9px;border-radius:50px}
+.bundle-body{padding:13px 15px}
+.bundle-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--gray-600);padding:3px 0}
+.bundle-prices{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid var(--gray-100);border-bottom:1px solid var(--gray-100);margin:10px 0}
+.bundle-original{font-size:11px;color:var(--gray-400)}
+.bundle-original span{text-decoration:line-through}
+.bundle-price{font-size:20px;font-weight:900;color:var(--blue)}
+.bundle-saving{font-size:10px;color:var(--green);font-weight:700}
+.bundle-btn{width:100%;background:linear-gradient(135deg,var(--cyan),#0284c7);color:var(--white);border:none;padding:12px;border-radius:11px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif}
 
-/* ── PRODUCT CARD ── */
-.product-card {
-  background: var(--white); border-radius: 16px; border: 1px solid var(--gray-200);
-  overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.05);
-  transition: transform .2s, box-shadow .2s; cursor: pointer;
-}
-.product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
-.product-img {
-  height: 120px; display: flex; align-items: center; justify-content: center;
-  position: relative; font-size: 48px;
-}
-.product-badge {
-  position: absolute; top: 8px; right: 8px;
-  font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 50px;
-}
-.badge-best { background: #fef3c7; color: #d97706; }
-.badge-hot  { background: #fee2e2; color: #dc2626; }
-.badge-new  { background: #dcfce7; color: #16a34a; }
-.product-info { padding: 11px 12px; }
-.product-name { font-size: 12px; font-weight: 800; color: var(--navy); margin-bottom: 3px; line-height: 1.4; }
-.product-desc { font-size: 10.5px; color: var(--gray-400); margin-bottom: 8px; line-height: 1.4; }
-.product-features { margin-bottom: 8px; }
-.product-feature { font-size: 10px; color: var(--gray-600); display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
-.product-feature::before { content: '✓'; color: var(--cyan); font-weight: 800; }
-.price-row { display: flex; align-items: center; justify-content: space-between; }
-.price-group { display: flex; flex-direction: column; }
-.price { font-size: 15px; font-weight: 900; color: var(--blue); }
-.price-old { font-size: 10px; color: var(--gray-400); text-decoration: line-through; }
-.order-btn {
-  background: var(--navy); color: var(--white); border: none;
-  padding: 7px 13px; border-radius: 10px; font-size: 11px; font-weight: 700;
-  cursor: pointer; font-family: 'Cairo', sans-serif; transition: all .2s; white-space: nowrap;
-}
-.order-btn:hover { background: var(--blue); transform: scale(1.05); }
+/* WHY */
+.why{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:18px;padding:18px;margin:18px 0;color:var(--white)}
+.why-title{font-size:14px;font-weight:900;text-align:center;margin-bottom:12px}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.why-item{background:rgba(255,255,255,.1);border-radius:11px;padding:11px;text-align:center}
+.why-icon{font-size:20px;margin-bottom:4px}
+.why-text{font-size:10px;font-weight:700;opacity:.9;line-height:1.4}
 
-/* ── BUNDLE CARD ── */
-.bundle-card {
-  background: var(--white); border-radius: 16px; border: 2px solid var(--cyan);
-  margin-bottom: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,172,193,.1);
-}
-.bundle-header {
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;
-}
-.bundle-title { font-size: 14px; font-weight: 800; color: var(--white); }
-.bundle-save { background: var(--cyan); color: var(--white); font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 50px; }
-.bundle-body { padding: 14px 16px; }
-.bundle-items { margin-bottom: 12px; }
-.bundle-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray-600); padding: 4px 0; }
-.bundle-prices {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 0; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100); margin-bottom: 12px;
-}
-.bundle-original { font-size: 11px; color: var(--gray-400); }
-.bundle-original span { text-decoration: line-through; }
-.bundle-price { font-size: 22px; font-weight: 900; color: var(--blue); }
-.bundle-saving { font-size: 10px; color: var(--green); font-weight: 700; }
-.bundle-order-btn {
-  width: 100%; background: linear-gradient(135deg, var(--cyan), #0284c7);
-  color: var(--white); border: none; padding: 13px; border-radius: 12px;
-  font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Cairo', sans-serif;
-  transition: all .2s;
-}
-.bundle-order-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,172,193,.3); }
+/* PHARMA NOTE */
+.pharma-note{background:#f0fdf4;border:1.5px solid #86efac;border-radius:14px;padding:13px;margin:14px 0}
+.pharma-header{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.pharma-icon{font-size:20px}
+.pharma-title{font-size:12px;font-weight:800;color:#15803d}
+.pharma-text{font-size:11px;color:#166534;line-height:1.65}
 
-/* ── WHY US ── */
-.why-section {
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  border-radius: 20px; padding: 20px; margin: 20px 0; color: var(--white);
-}
-.why-title { font-size: 15px; font-weight: 900; text-align: center; margin-bottom: 14px; }
-.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.why-item { background: rgba(255,255,255,.1); border-radius: 12px; padding: 12px; text-align: center; }
-.why-icon { font-size: 22px; margin-bottom: 5px; }
-.why-text { font-size: 11px; font-weight: 700; opacity: .9; line-height: 1.4; }
+/* FOOTER */
+.footer{background:var(--navy);padding:22px 18px;text-align:center}
+.footer-logo{font-size:17px;font-weight:900;color:var(--white);margin-bottom:4px}
+.footer-logo span{color:var(--cyan)}
+.footer-text{font-size:10px;color:rgba(255,255,255,.45);margin-bottom:14px}
+.footer-social{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.footer-social-btn{background:rgba(255,255,255,.1);color:var(--white);padding:6px 14px;border-radius:50px;font-size:10px;font-weight:700;text-decoration:none;border:1px solid rgba(255,255,255,.15)}
+.footer-copy{font-size:9px;color:rgba(255,255,255,.25)}
 
-/* ── PHARMACIST ── */
-.pharma-note {
-  background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 16px;
-  padding: 14px; margin: 16px 0;
-}
-.pharma-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.pharma-icon { font-size: 22px; }
-.pharma-title { font-size: 13px; font-weight: 800; color: #15803d; }
-.pharma-text { font-size: 12px; color: #166534; line-height: 1.65; }
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:20px;left:20px;background:var(--wa);color:var(--white);width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,.5);cursor:pointer;z-index:500;animation:pulse-wa 2.5s infinite;text-decoration:none}
+@keyframes pulse-wa{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,.7)}}
 
-/* ── FOOTER ── */
-.footer { background: var(--navy); padding: 24px 20px; text-align: center; }
-.footer-logo { font-size: 18px; font-weight: 900; color: var(--white); margin-bottom: 4px; }
-.footer-logo span { color: var(--cyan); }
-.footer-text { font-size: 11px; color: rgba(255,255,255,.5); margin-bottom: 16px; }
-.footer-social { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-.footer-social-btn {
-  background: rgba(255,255,255,.1); color: var(--white); padding: 7px 16px;
-  border-radius: 50px; font-size: 11px; font-weight: 700; text-decoration: none;
-  border: 1px solid rgba(255,255,255,.15); transition: all .2s;
-}
-.footer-social-btn:hover { background: rgba(255,255,255,.2); }
-.footer-copy { font-size: 10px; color: rgba(255,255,255,.3); }
+/* INSTALL */
+.install-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--navy);padding:13px 16px;flex-direction:row;align-items:center;justify-content:space-between;z-index:400;border-top:2px solid var(--cyan)}
+.install-banner.show{display:flex}
+.install-text{font-size:12px;color:var(--white);font-weight:700}
+.install-sub{font-size:10px;color:rgba(255,255,255,.55)}
+.install-btn{background:var(--cyan);color:var(--white);border:none;padding:8px 16px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:800;cursor:pointer}
+.install-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:18px;cursor:pointer}
 
-/* ── WA FLOAT ── */
-.wa-float {
-  position: fixed; bottom: 20px; left: 20px;
-  background: var(--wa); color: var(--white); width: 56px; height: 56px;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 26px; box-shadow: 0 4px 16px rgba(37,211,102,.5); cursor: pointer;
-  z-index: 500; animation: pulse-wa 2.5s infinite; text-decoration: none;
-}
-@keyframes pulse-wa {
-  0%,100% { box-shadow: 0 4px 16px rgba(37,211,102,.4); }
-  50% { box-shadow: 0 4px 28px rgba(37,211,102,.7); }
-}
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--gray-400)}
+.empty-icon{font-size:44px;margin-bottom:10px}
+.empty-text{font-size:13px;font-weight:600}
+.hidden{display:none!important}
 
-/* ── INSTALL BANNER ── */
-.install-banner {
-  display: none; position: fixed; bottom: 0; left: 0; right: 0;
-  background: var(--navy); padding: 14px 16px;
-  flex-direction: row; align-items: center; justify-content: space-between;
-  z-index: 400; border-top: 2px solid var(--cyan);
-  box-shadow: 0 -4px 20px rgba(0,0,0,.3);
-}
-.install-banner.show { display: flex; }
-.install-text { font-size: 12px; color: var(--white); font-weight: 700; }
-.install-sub { font-size: 10px; color: rgba(255,255,255,.6); }
-.install-btn {
-  background: var(--cyan); color: var(--white); border: none; padding: 9px 18px;
-  border-radius: 10px; font-family: 'Cairo', sans-serif; font-size: 12px;
-  font-weight: 800; cursor: pointer; white-space: nowrap;
-}
-.install-close { background: none; border: none; color: rgba(255,255,255,.5); font-size: 18px; cursor: pointer; padding: 0 4px; }
-
-/* ── EMPTY STATE ── */
-.empty-state { text-align: center; padding: 40px 20px; color: var(--gray-400); }
-.empty-state-icon { font-size: 48px; margin-bottom: 12px; }
-.empty-state-text { font-size: 14px; font-weight: 600; }
-
-.hidden { display: none !important; }
+/* SPINNER */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-left:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- ═══ ADMIN OVERLAY ═══ -->
+<!-- LOADING -->
+<div id="loading" class="hide">
+  <div class="loading-logo">⚕️</div>
+  <div class="loading-text">صحتك • Sehhtak</div>
+  <div class="loading-sub">جاري التحميل...</div>
+</div>
+
+<!-- ADMIN OVERLAY -->
 <div id="admin-overlay">
   <div class="admin-box">
-    <div class="admin-title">⚙️ لوحة التحكم</div>
+    <div class="admin-title">
+      <span>⚙️ لوحة التحكم</span>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
 
-    <div id="admin-main-view">
-      <!-- Products List -->
-      <div class="admin-section-title">📦 المنتجات الحالية</div>
-      <div class="products-list-admin" id="admin-products-list"></div>
-      <button class="btn-add-new" onclick="showAddProduct()">+ إضافة منتج جديد</button>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab(&#39;products&#39;)">📦 المنتجات</button>
+      <button class="admin-tab" onclick="switchTab(&#39;settings&#39;)">⚙️ الإعدادات</button>
+    </div>
 
-      <div class="admin-divider"></div>
+    <div class="success-msg" id="success-msg">✅ تم الحفظ بنجاح!</div>
+    <div class="error-msg" id="error-msg">❌ حدث خطأ — تأكد من الإعدادات</div>
 
-      <!-- Settings -->
-      <div class="admin-section-title">⚙️ إعدادات الموقع</div>
-      <div class="admin-field">
-        <label>رقم الواتساب</label>
-        <input type="text" id="admin-wa" placeholder="مثال: 201507222502">
-      </div>
-      <div class="admin-field">
-        <label>رابط فيسبوك (لما تعمله)</label>
-        <input type="text" id="admin-fb" placeholder="https://facebook.com/sehhtak">
-      </div>
-      <div class="admin-field">
-        <label>رابط إنستجرام (لما تعمله)</label>
-        <input type="text" id="admin-ig" placeholder="https://instagram.com/sehhtak">
-      </div>
-      <div class="admin-field">
-        <label>رابط تيك توك (لما تعمله)</label>
-        <input type="text" id="admin-tt" placeholder="https://tiktok.com/@sehhtak">
-      </div>
+    <!-- PRODUCTS TAB -->
+    <div class="admin-section show" id="tab-products">
+      <div id="admin-products-list"></div>
+      <button class="btn-save" style="background:linear-gradient(135deg,#00796B,#00ACC1)" onclick="showAddForm()">+ إضافة منتج جديد</button>
 
-      <div class="admin-btns">
-        <button class="btn-cancel" onclick="closeAdmin()">إلغاء</button>
-        <button class="btn-save" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+      <!-- ADD FORM -->
+      <div id="add-form" class="hidden">
+        <div class="admin-divider"></div>
+        <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px">➕ منتج جديد</div>
+        <div class="admin-field"><label>اسم المنتج *</label><input id="f-name" placeholder="مثال: جهاز قياس سكر Contour Plus"></div>
+        <div class="admin-field"><label>الوصف</label><input id="f-desc" placeholder="مثال: دقة عالية — نتيجة في 5 ثواني"></div>
+        <div class="admin-grid">
+          <div class="admin-field"><label>الكاتيجوري</label>
+            <select id="f-cat">
+              <option value="sugar">أجهزة السكر</option>
+              <option value="pressure">أجهزة الضغط</option>
+              <option value="oxygen">أجهزة الأكسجين</option>
+              <option value="strips">شرائط وملحقات</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Badge</label>
+            <select id="f-badge">
+              <option value="">بدون</option>
+              <option value="best">⭐ الأكثر مبيعاً</option>
+              <option value="hot">🔥 عرض</option>
+              <option value="new">✨ جديد</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-field"><label>السعر (ج) *</label><input id="f-price" type="number" placeholder="420"></div>
+          <div class="admin-field"><label>السعر القديم (ج)</label><input id="f-oldprice" type="number" placeholder="550"></div>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-field"><label>الإيموجي</label><input id="f-emoji" placeholder="🩺" maxlength="4"></div>
+          <div class="admin-field"><label>لون الخلفية</label>
+            <select id="f-color">
+              <option value="linear-gradient(135deg,#e3f0ff,#dbeafe)">أزرق</option>
+              <option value="linear-gradient(135deg,#fef3c7,#fde68a)">أصفر</option>
+              <option value="linear-gradient(135deg,#f0fdf4,#dcfce7)">أخضر</option>
+              <option value="linear-gradient(135deg,#ede9fe,#ddd6fe)">بنفسجي</option>
+              <option value="linear-gradient(135deg,#fce7f3,#fbcfe8)">وردي</option>
+              <option value="linear-gradient(135deg,#e0f7fa,#b2ebf2)">سيان</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-field"><label>المميزات (كل ميزة في سطر)</label><textarea id="f-features" placeholder="دقة عالية
+ذاكرة 480 قراءة
+شاشة كبيرة"></textarea></div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn-save" style="background:var(--gray-200);color:var(--gray-600)" onclick="hideAddForm()">إلغاء</button>
+          <button class="btn-save" id="btn-add-product" onclick="addProduct()">✅ إضافة</button>
+        </div>
       </div>
     </div>
 
-    <!-- Add Product Form -->
-    <div id="admin-add-view" class="hidden">
-      <div class="admin-section-title">➕ إضافة منتج جديد</div>
+    <!-- SETTINGS TAB -->
+    <div class="admin-section" id="tab-settings">
       <div class="admin-field">
-        <label>اسم المنتج</label>
-        <input type="text" id="new-name" placeholder="مثال: جهاز قياس سكر Contour Plus">
+        <label>🔑 JSONBin Master Key</label>
+        <input id="s-masterkey" type="password" placeholder="$2a$10$...">
+        <div style="font-size:10px;color:var(--gray-400);margin-top:3px">مطلوب لحفظ التغييرات</div>
       </div>
-      <div class="admin-field">
-        <label>الوصف</label>
-        <input type="text" id="new-desc" placeholder="مثال: دقة عالية — نتيجة في 5 ثواني">
-      </div>
-      <div class="admin-field">
-        <label>الكاتيجوري</label>
-        <select id="new-cat">
-          <option value="sugar">أجهزة السكر</option>
-          <option value="pressure">أجهزة الضغط</option>
-          <option value="oxygen">أجهزة الأكسجين</option>
-          <option value="strips">شرائط وملحقات</option>
-          <option value="bundles">Bundles</option>
-        </select>
-      </div>
-      <div class="admin-field">
-        <label>السعر (بالجنيه)</label>
-        <input type="number" id="new-price" placeholder="420">
-      </div>
-      <div class="admin-field">
-        <label>السعر القديم (اختياري)</label>
-        <input type="number" id="new-old-price" placeholder="550">
-      </div>
-      <div class="admin-field">
-        <label>الإيموجي (للصورة)</label>
-        <input type="text" id="new-emoji" placeholder="🩺" maxlength="4">
-      </div>
-      <div class="admin-field">
-        <label>لون الخلفية</label>
-        <select id="new-color">
-          <option value="linear-gradient(135deg,#e3f0ff,#dbeafe)">أزرق فاتح</option>
-          <option value="linear-gradient(135deg,#fef3c7,#fde68a)">أصفر فاتح</option>
-          <option value="linear-gradient(135deg,#f0fdf4,#dcfce7)">أخضر فاتح</option>
-          <option value="linear-gradient(135deg,#ede9fe,#ddd6fe)">بنفسجي فاتح</option>
-          <option value="linear-gradient(135deg,#fce7f3,#fbcfe8)">وردي فاتح</option>
-          <option value="linear-gradient(135deg,#e0f7fa,#b2ebf2)">سيان فاتح</option>
-        </select>
-      </div>
-      <div class="admin-field">
-        <label>Badge</label>
-        <select id="new-badge">
-          <option value="">بدون</option>
-          <option value="best">⭐ الأكثر مبيعاً</option>
-          <option value="hot">🔥 عرض</option>
-          <option value="new">✨ جديد</option>
-        </select>
-      </div>
-      <div class="admin-field">
-        <label>المميزات (كل ميزة في سطر)</label>
-        <textarea id="new-features" placeholder="دقة عالية
-ذاكرة 480 قراءة
-شاشة كبيرة"></textarea>
-      </div>
-      <div class="admin-btns">
-        <button class="btn-cancel" onclick="backToMain()">← رجوع</button>
-        <button class="btn-save" onclick="addProduct()">✅ إضافة المنتج</button>
-      </div>
+      <div class="admin-field"><label>📞 رقم الواتساب</label><input id="s-wa" placeholder="201507222502"></div>
+      <div class="admin-field"><label>📘 رابط فيسبوك</label><input id="s-fb" placeholder="https://facebook.com/sehhtak"></div>
+      <div class="admin-field"><label>📸 رابط إنستجرام</label><input id="s-ig" placeholder="https://instagram.com/sehhtak"></div>
+      <div class="admin-field"><label>🎵 رابط تيك توك</label><input id="s-tt" placeholder="https://tiktok.com/@sehhtak"></div>
+      <button class="btn-save" id="btn-save-settings" onclick="saveSettings()">💾 حفظ الإعدادات</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ TOPBAR ═══ -->
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">
     <div class="brand-icon">⚕</div>
     <div class="brand-name">صحتك <span>•</span> Sehhtak</div>
   </div>
-  <div class="topbar-actions">
-    <button class="admin-btn" onclick="openAdmin()" title="لوحة التحكم">⚙️</button>
-    <a class="wa-topbar" id="wa-topbar-link" href="https://wa.me/201507222502" onclick="openWA(event)">
-      <span>💬</span><span>اطلب</span>
-    </a>
+  <div class="topbar-right">
+    <button class="icon-btn" onclick="openAdmin()">⚙️</button>
+    <button class="wa-btn" onclick="openWA()"><span>💬</span><span>اطلب</span></button>
   </div>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <div class="hero">
   <div class="hero-content">
     <div class="hero-tag">🏥 مستلزمات طبية أصلية</div>
@@ -465,27 +307,20 @@ body {
   </div>
 </div>
 
-<!-- ═══ WA BAR ═══ -->
-<a class="wa-bar" href="https://wa.me/201507222502" onclick="openWA(event)" id="wa-bar-link">
-  <span>📞</span>
-  <span>اطلب دلوقتي على واتساب</span>
+<!-- WA BAR -->
+<a class="wa-bar" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openWA();return false">
+  <span>📞</span><span>اطلب دلوقتي على واتساب</span>
 </a>
 
-<!-- ═══ SOCIAL BAR ═══ -->
+<!-- SOCIAL BAR -->
 <div class="social-bar">
   <span class="social-label">تابعنا:</span>
-  <a class="social-btn" id="fb-link" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;fb&#39;)">
-    <span>📘</span><span>فيسبوك</span>
-  </a>
-  <a class="social-btn" id="ig-link" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;ig&#39;)">
-    <span>📸</span><span>إنستجرام</span>
-  </a>
-  <a class="social-btn" id="tt-link" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;tt&#39;)">
-    <span>🎵</span><span>تيك توك</span>
-  </a>
+  <span class="social-btn" onclick="openSocial(&#39;fb&#39;)">📘 فيسبوك</span>
+  <span class="social-btn" onclick="openSocial(&#39;ig&#39;)">📸 إنستجرام</span>
+  <span class="social-btn" onclick="openSocial(&#39;tt&#39;)">🎵 تيك توك</span>
 </div>
 
-<!-- ═══ FILTERS ═══ -->
+<!-- FILTERS -->
 <div class="filters-wrap">
   <button class="filter-btn active" onclick="filterCat(&#39;all&#39;,this)">🏷️ الكل</button>
   <button class="filter-btn" onclick="filterCat(&#39;sugar&#39;,this)">🩺 السكر</button>
@@ -495,32 +330,25 @@ body {
   <button class="filter-btn" onclick="filterCat(&#39;bundles&#39;,this)">📦 Bundles</button>
 </div>
 
-<!-- ═══ MAIN ═══ -->
-<div class="main" id="main-content">
-
-  <div class="why-section">
+<!-- MAIN -->
+<div class="main">
+  <div class="why">
     <div class="why-title">⭐ ليه تختار صحتك؟</div>
     <div class="why-grid">
       <div class="why-item"><div class="why-icon">✅</div><div class="why-text">منتجات أصلية معتمدة 100%</div></div>
-      <div class="why-item"><div class="why-icon">🚚</div><div class="why-text">توصيل لحد بيتك خلال 24 ساعة</div></div>
+      <div class="why-item"><div class="why-icon">🚚</div><div class="why-text">توصيل خلال 24 ساعة</div></div>
       <div class="why-item"><div class="why-icon">💊</div><div class="why-text">استشارة صيدلي مجاناً</div></div>
       <div class="why-item"><div class="why-icon">🔄</div><div class="why-text">استبدال مجاني لو في مشكلة</div></div>
     </div>
   </div>
-
-  <div id="products-container"><div class="section">
-      <div class="section-title">🩺 أجهزة قياس السكر<div class="section-line"></div></div>
-      <div class="products-grid"><div class="product-card">
+  <div id="products-container"><div class="section"><div class="section-title">🩺 أجهزة قياس السكر<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#e3f0ff,#dbeafe)">🩺<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
         <div class="product-info">
           <div class="product-name">Contour Plus جهاز قياس سكر</div>
           <div class="product-desc">دقة عالية — نتيجة في 5 ثواني</div>
-          <div class="product-features"><div class="product-feature">دقة ±10% معتمدة طبياً</div><div class="product-feature">ذاكرة 480 قراءة</div><div class="product-feature">شاشة كبيرة واضحة</div></div>
+          <div class="product-features"><div class="feat">دقة ±10% معتمدة</div><div class="feat">ذاكرة 480 قراءة</div><div class="feat">شاشة كبيرة</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">420 ج</div>
-              <div class="price-old">550 ج</div>
-            </div>
+            <div><div class="price">420 ج</div><div class="price-old">550 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;Contour Plus جهاز قياس سكر&#39;,&#39;420&#39;)">اطلب</button>
           </div>
         </div>
@@ -528,29 +356,21 @@ body {
         <div class="product-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">🔬<span class="product-badge badge-hot">🔥 عرض</span></div>
         <div class="product-info">
           <div class="product-name">Accu-Chek Active جهاز سكر</div>
-          <div class="product-desc">الأشهر في مصر — موثوق من الأطباء</div>
-          <div class="product-features"><div class="product-feature">لا يحتاج coding</div><div class="product-feature">ذاكرة 500 قراءة</div><div class="product-feature">ضمان سنتين</div></div>
+          <div class="product-desc">الأشهر في مصر — موثوق طبياً</div>
+          <div class="product-features"><div class="feat">لا يحتاج coding</div><div class="feat">ذاكرة 500 قراءة</div><div class="feat">ضمان سنتين</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">380 ج</div>
-              <div class="price-old">480 ج</div>
-            </div>
+            <div><div class="price">380 ج</div><div class="price-old">480 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;Accu-Chek Active جهاز سكر&#39;,&#39;380&#39;)">اطلب</button>
           </div>
         </div>
-      </div></div></div><div class="section">
-      <div class="section-title">💉 أجهزة قياس الضغط<div class="section-line"></div></div>
-      <div class="products-grid"><div class="product-card">
+      </div></div></div><div class="section"><div class="section-title">💉 أجهزة قياس الضغط<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe)">💉<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
         <div class="product-info">
           <div class="product-name">Omron M2 Basic</div>
-          <div class="product-desc">الأكثر ثقة — موصى به طبياً</div>
-          <div class="product-features"><div class="product-feature">كشف عدم انتظام النبض</div><div class="product-feature">ذاكرة 30 قراءة</div><div class="product-feature">ضمان 3 سنين</div></div>
+          <div class="product-desc">موصى به طبياً</div>
+          <div class="product-features"><div class="feat">كشف عدم انتظام النبض</div><div class="feat">ضمان 3 سنين</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">620 ج</div>
-              <div class="price-old">780 ج</div>
-            </div>
+            <div><div class="price">620 ج</div><div class="price-old">780 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;Omron M2 Basic&#39;,&#39;620&#39;)">اطلب</button>
           </div>
         </div>
@@ -558,266 +378,199 @@ body {
         <div class="product-img" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">🩸<span class="product-badge badge-hot">🔥 عرض</span></div>
         <div class="product-info">
           <div class="product-name">Little Doctor LD20</div>
-          <div class="product-desc">اقتصادي وموثوق للاستخدام اليومي</div>
-          <div class="product-features"><div class="product-feature">شاشة LCD كبيرة</div><div class="product-feature">سهل الاستخدام</div></div>
+          <div class="product-desc">اقتصادي وموثوق</div>
+          <div class="product-features"><div class="feat">شاشة LCD كبيرة</div><div class="feat">سهل الاستخدام</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">480 ج</div>
-              <div class="price-old">580 ج</div>
-            </div>
+            <div><div class="price">480 ج</div><div class="price-old">580 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;Little Doctor LD20&#39;,&#39;480&#39;)">اطلب</button>
           </div>
         </div>
-      </div></div></div><div class="section">
-      <div class="section-title">🫁 أجهزة قياس الأكسجين<div class="section-line"></div></div>
-      <div class="products-grid"><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5)">🫁</div>
-        <div class="product-info">
-          <div class="product-name">Pulse Oximeter بيسيك</div>
-          <div class="product-desc">قياس الأكسجين والنبض فوراً</div>
-          <div class="product-features"><div class="product-feature">نتيجة فورية دقيقة</div><div class="product-feature">خفيف وسهل الحمل</div></div>
-          <div class="price-row">
-            <div class="price-group">
-              <div class="price">220 ج</div>
-              
-            </div>
-            <button class="order-btn" onclick="orderProduct(&#39;Pulse Oximeter بيسيك&#39;,&#39;220&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">💫<span class="product-badge badge-new">✨ جديد</span></div>
+      </div></div></div><div class="section"><div class="section-title">🫁 أجهزة قياس الأكسجين<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">🫁<span class="product-badge badge-new">✨ جديد</span></div>
         <div class="product-info">
           <div class="product-name">Pulse Oximeter OLED</div>
-          <div class="product-desc">شاشة OLED ملونة — قراءة أوضح</div>
-          <div class="product-features"><div class="product-feature">شاشة OLED ملونة</div><div class="product-feature">4 اتجاهات عرض</div></div>
+          <div class="product-desc">شاشة ملونة — قراءة أوضح</div>
+          <div class="product-features"><div class="feat">شاشة OLED</div><div class="feat">4 اتجاهات عرض</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">280 ج</div>
-              
-            </div>
+            <div><div class="price">280 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;Pulse Oximeter OLED&#39;,&#39;280&#39;)">اطلب</button>
           </div>
         </div>
-      </div></div></div><div class="section">
-      <div class="section-title">🧪 شرائط وملحقات<div class="section-line"></div></div>
-      <div class="products-grid"><div class="product-card">
+      </div></div></div><div class="section"><div class="section-title">🧪 شرائط وملحقات<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7)">🧪<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
         <div class="product-info">
           <div class="product-name">شرائط Contour Plus (50)</div>
-          <div class="product-desc">متوافقة مع جهاز Contour Plus</div>
-          <div class="product-features"><div class="product-feature">نتيجة في 5 ثواني</div><div class="product-feature">كمية دم صغيرة</div></div>
+          <div class="product-desc">متوافقة مع Contour Plus</div>
+          <div class="product-features"><div class="feat">نتيجة في 5 ثواني</div><div class="feat">كمية دم صغيرة</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">200 ج</div>
-              
-            </div>
+            <div><div class="price">200 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;شرائط Contour Plus (50)&#39;,&#39;200&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">💉</div>
-        <div class="product-info">
-          <div class="product-name">شرائط Accu-Chek (50)</div>
-          <div class="product-desc">متوافقة مع جهاز Accu-Chek</div>
-          <div class="product-features"><div class="product-feature">دقة عالية مضمونة</div><div class="product-feature">صلاحية 18 شهر</div></div>
-          <div class="price-row">
-            <div class="price-group">
-              <div class="price">190 ج</div>
-              
-            </div>
-            <button class="order-btn" onclick="orderProduct(&#39;شرائط Accu-Chek (50)&#39;,&#39;190&#39;)">اطلب</button>
           </div>
         </div>
       </div><div class="product-card">
         <div class="product-img" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)">🪡<span class="product-badge badge-new">✨ جديد</span></div>
         <div class="product-info">
           <div class="product-name">لانسيت (100 حبة)</div>
-          <div class="product-desc">إبر قياس معقمة — ألم أقل</div>
-          <div class="product-features"><div class="product-feature">معقمة ومعبأة فردياً</div><div class="product-feature">متوافقة مع كل الأجهزة</div></div>
+          <div class="product-desc">إبر قياس معقمة</div>
+          <div class="product-features"><div class="feat">معقمة فردياً</div><div class="feat">لكل الأجهزة</div></div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">60 ج</div>
-              
-            </div>
+            <div><div class="price">60 ج</div></div>
             <button class="order-btn" onclick="orderProduct(&#39;لانسيت (100 حبة)&#39;,&#39;60&#39;)">اطلب</button>
           </div>
         </div>
       </div></div></div><div class="section"><div class="section-title">📦 Bundles — وفّر أكتر<div class="section-line"></div></div><div class="bundle-card">
-        <div class="bundle-header">
-          <div class="bundle-title">Bundle السكر الكامل</div>
-          <div class="bundle-save">وفّر 130 ج</div>
-        </div>
+        <div class="bundle-header"><div class="bundle-title">Bundle السكر الكامل</div><div class="bundle-save">وفّر 130 ج</div></div>
         <div class="bundle-body">
-          <div class="bundle-items"><div class="bundle-item"><span>🩺 جهاز Contour Plus</span></div><div class="bundle-item"><span>🧪 شرائط (50 شريط)</span></div><div class="bundle-item"><span>🪡 لانسيت (100 حبة)</span></div><div class="bundle-item"><span>🎁 قطن طبي مجاناً</span></div></div>
+          <div><div class="bundle-item">🩺 جهاز Contour Plus</div><div class="bundle-item">🧪 شرائط (50)</div><div class="bundle-item">🪡 لانسيت (100)</div><div class="bundle-item">🎁 قطن طبي مجاناً</div></div>
           <div class="bundle-prices">
             <div class="bundle-original">الأصلي: <span>680 ج</span></div>
             <div><div class="bundle-price">550 ج</div><div class="bundle-saving">✅ وفّر 130 ج</div></div>
           </div>
-          <button class="bundle-order-btn" onclick="orderProduct(&#39;Bundle السكر الكامل&#39;,&#39;550&#39;)">🛒 اطلب Bundle السكر الكامل</button>
+          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle السكر الكامل&#39;,&#39;550&#39;)">🛒 اطلب الـ Bundle</button>
         </div>
       </div><div class="bundle-card">
-        <div class="bundle-header">
-          <div class="bundle-title">Bundle الضغط والأكسجين</div>
-          <div class="bundle-save">وفّر 100 ج</div>
-        </div>
+        <div class="bundle-header"><div class="bundle-title">Bundle الضغط والأكسجين</div><div class="bundle-save">وفّر 100 ج</div></div>
         <div class="bundle-body">
-          <div class="bundle-items"><div class="bundle-item"><span>💉 جهاز Omron M2 Basic</span></div><div class="bundle-item"><span>🫁 Pulse Oximeter OLED</span></div><div class="bundle-item"><span>🎁 استشارة صيدلي مجاناً</span></div></div>
+          <div><div class="bundle-item">💉 Omron M2 Basic</div><div class="bundle-item">🫁 Pulse Oximeter OLED</div><div class="bundle-item">🎁 استشارة مجاناً</div></div>
           <div class="bundle-prices">
             <div class="bundle-original">الأصلي: <span>900 ج</span></div>
             <div><div class="bundle-price">800 ج</div><div class="bundle-saving">✅ وفّر 100 ج</div></div>
           </div>
-          <button class="bundle-order-btn" onclick="orderProduct(&#39;Bundle الضغط والأكسجين&#39;,&#39;800&#39;)">🛒 اطلب Bundle الضغط والأكسجين</button>
+          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle الضغط والأكسجين&#39;,&#39;800&#39;)">🛒 اطلب الـ Bundle</button>
         </div>
       </div><div class="bundle-card">
-        <div class="bundle-header">
-          <div class="bundle-title">Bundle المتابعة الشاملة</div>
-          <div class="bundle-save">وفّر 250 ج</div>
-        </div>
+        <div class="bundle-header"><div class="bundle-title">Bundle المتابعة الشاملة</div><div class="bundle-save">وفّر 250 ج</div></div>
         <div class="bundle-body">
-          <div class="bundle-items"><div class="bundle-item"><span>🩺 جهاز سكر Contour Plus</span></div><div class="bundle-item"><span>💉 جهاز ضغط Omron M2</span></div><div class="bundle-item"><span>🫁 Pulse Oximeter</span></div><div class="bundle-item"><span>🧪 شرائط (50)</span></div><div class="bundle-item"><span>🎁 متابعة شهرية مجانية</span></div></div>
+          <div><div class="bundle-item">🩺 جهاز سكر</div><div class="bundle-item">💉 جهاز ضغط</div><div class="bundle-item">🫁 Pulse Oximeter</div><div class="bundle-item">🧪 شرائط (50)</div><div class="bundle-item">🎁 متابعة شهرية</div></div>
           <div class="bundle-prices">
             <div class="bundle-original">الأصلي: <span>1,350 ج</span></div>
             <div><div class="bundle-price">1100 ج</div><div class="bundle-saving">✅ وفّر 250 ج</div></div>
           </div>
-          <button class="bundle-order-btn" onclick="orderProduct(&#39;Bundle المتابعة الشاملة&#39;,&#39;1100&#39;)">🛒 اطلب Bundle المتابعة الشاملة</button>
+          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle المتابعة الشاملة&#39;,&#39;1100&#39;)">🛒 اطلب الـ Bundle</button>
         </div>
       </div></div></div>
-
   <div class="pharma-note">
-    <div class="pharma-header">
-      <div class="pharma-icon">💊</div>
-      <div class="pharma-title">نصيحة فريق صحتك</div>
-    </div>
-    <div class="pharma-text">مش بس بنبيع منتجات — بنتأكد إن المنتج الصح لحالتك. ابعتلنا رسالة واشرحلنا حالتك وهنساعدك تختار الأنسب ليك مجاناً. 🌿</div>
+    <div class="pharma-header"><div class="pharma-icon">💊</div><div class="pharma-title">نصيحة فريق صحتك</div></div>
+    <div class="pharma-text">مش بس بنبيع منتجات — بنتأكد إن المنتج الصح لحالتك. ابعتلنا رسالة وهنساعدك تختار الأنسب ليك مجاناً. 🌿</div>
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <div class="footer">
   <div class="footer-logo">صحتك <span>•</span> Sehhtak</div>
   <div class="footer-text">مستلزمات طبية أصلية — توصيل لحد بيتك</div>
   <div class="footer-social">
-    <a class="footer-social-btn" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openWA(event)">💬 واتساب</a>
-    <a class="footer-social-btn" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;fb&#39;)">📘 فيسبوك</a>
-    <a class="footer-social-btn" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;ig&#39;)">📸 إنستجرام</a>
-    <a class="footer-social-btn" href="file:///C:/Users/MOHAME~1.MED/AppData/Local/Temp/Rar$EXa0.311/index.html#" onclick="openSocial(event,&#39;tt&#39;)">🎵 تيك توك</a>
+    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openWA();return false">💬 واتساب</a>
+    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openSocial(&#39;fb&#39;);return false">📘 فيسبوك</a>
+    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openSocial(&#39;ig&#39;);return false">📸 إنستجرام</a>
+    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openSocial(&#39;tt&#39;);return false">🎵 تيك توك</a>
   </div>
-  <div class="footer-copy">© 2025 صحتك • Sehhtak — جميع الحقوق محفوظة</div>
+  <div class="footer-copy">© 2025 صحتك • Sehhtak</div>
 </div>
 
-<!-- WA Float -->
-<a class="wa-float" href="https://wa.me/201507222502" onclick="openWA(event)" id="wa-float-link">💬</a>
+<a class="wa-float" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index.html#" onclick="openWA();return false">💬</a>
 
-<!-- Install Banner -->
 <div class="install-banner" id="install-banner">
-  <div>
-    <div class="install-text">📲 نزّل التطبيق</div>
-    <div class="install-sub">أضف صحتك على شاشتك الرئيسية</div>
-  </div>
+  <div><div class="install-text">📲 نزّل التطبيق</div><div class="install-sub">أضف صحتك على شاشتك</div></div>
   <button class="install-btn" id="install-btn">تثبيت</button>
   <button class="install-close" onclick="document.getElementById(&#39;install-banner&#39;).classList.remove(&#39;show&#39;)">✕</button>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════════════
-const DEFAULT_SETTINGS = {
-  wa: '201507222502',
-  fb: '',
-  ig: '',
-  tt: '',
+// ══════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════
+const BIN_ID = '6a73308cf5f4af5e29ee5359';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const ADMIN_PASS = 'sehhtak2025';
+
+const DEFAULT_DATA = {
+  settings: { wa:'201507222502', fb:'', ig:'', tt:'', masterKey:'' },
+  products: [
+    {id:1,name:'Contour Plus جهاز قياس سكر',desc:'دقة عالية — نتيجة في 5 ثواني',cat:'sugar',price:420,oldPrice:550,emoji:'🩺',color:'linear-gradient(135deg,#e3f0ff,#dbeafe)',badge:'best',features:['دقة ±10% معتمدة','ذاكرة 480 قراءة','شاشة كبيرة']},
+    {id:2,name:'Accu-Chek Active جهاز سكر',desc:'الأشهر في مصر — موثوق طبياً',cat:'sugar',price:380,oldPrice:480,emoji:'🔬',color:'linear-gradient(135deg,#fef3c7,#fde68a)',badge:'hot',features:['لا يحتاج coding','ذاكرة 500 قراءة','ضمان سنتين']},
+    {id:3,name:'شرائط Contour Plus (50)',desc:'متوافقة مع Contour Plus',cat:'strips',price:200,oldPrice:null,emoji:'🧪',color:'linear-gradient(135deg,#f0fdf4,#dcfce7)',badge:'best',features:['نتيجة في 5 ثواني','كمية دم صغيرة']},
+    {id:4,name:'لانسيت (100 حبة)',desc:'إبر قياس معقمة',cat:'strips',price:60,oldPrice:null,emoji:'🪡',color:'linear-gradient(135deg,#fce7f3,#fbcfe8)',badge:'new',features:['معقمة فردياً','لكل الأجهزة']},
+    {id:5,name:'Omron M2 Basic',desc:'موصى به طبياً',cat:'pressure',price:620,oldPrice:780,emoji:'💉',color:'linear-gradient(135deg,#ede9fe,#ddd6fe)',badge:'best',features:['كشف عدم انتظام النبض','ضمان 3 سنين']},
+    {id:6,name:'Little Doctor LD20',desc:'اقتصادي وموثوق',cat:'pressure',price:480,oldPrice:580,emoji:'🩸',color:'linear-gradient(135deg,#e0f2fe,#bae6fd)',badge:'hot',features:['شاشة LCD كبيرة','سهل الاستخدام']},
+    {id:7,name:'Pulse Oximeter OLED',desc:'شاشة ملونة — قراءة أوضح',cat:'oxygen',price:280,oldPrice:null,emoji:'🫁',color:'linear-gradient(135deg,#e0f2fe,#bae6fd)',badge:'new',features:['شاشة OLED','4 اتجاهات عرض']},
+  ]
 };
 
-const DEFAULT_PRODUCTS = [
-  { id:1, name:'Contour Plus جهاز قياس سكر', desc:'دقة عالية — نتيجة في 5 ثواني', cat:'sugar', price:420, oldPrice:550, emoji:'🩺', color:'linear-gradient(135deg,#e3f0ff,#dbeafe)', badge:'best', features:['دقة ±10% معتمدة طبياً','ذاكرة 480 قراءة','شاشة كبيرة واضحة'] },
-  { id:2, name:'Accu-Chek Active جهاز سكر', desc:'الأشهر في مصر — موثوق من الأطباء', cat:'sugar', price:380, oldPrice:480, emoji:'🔬', color:'linear-gradient(135deg,#fef3c7,#fde68a)', badge:'hot', features:['لا يحتاج coding','ذاكرة 500 قراءة','ضمان سنتين'] },
-  { id:3, name:'شرائط Contour Plus (50)', desc:'متوافقة مع جهاز Contour Plus', cat:'strips', price:200, oldPrice:null, emoji:'🧪', color:'linear-gradient(135deg,#f0fdf4,#dcfce7)', badge:'best', features:['نتيجة في 5 ثواني','كمية دم صغيرة'] },
-  { id:4, name:'شرائط Accu-Chek (50)', desc:'متوافقة مع جهاز Accu-Chek', cat:'strips', price:190, oldPrice:null, emoji:'💉', color:'linear-gradient(135deg,#fef3c7,#fde68a)', badge:'', features:['دقة عالية مضمونة','صلاحية 18 شهر'] },
-  { id:5, name:'لانسيت (100 حبة)', desc:'إبر قياس معقمة — ألم أقل', cat:'strips', price:60, oldPrice:null, emoji:'🪡', color:'linear-gradient(135deg,#fce7f3,#fbcfe8)', badge:'new', features:['معقمة ومعبأة فردياً','متوافقة مع كل الأجهزة'] },
-  { id:6, name:'Omron M2 Basic', desc:'الأكثر ثقة — موصى به طبياً', cat:'pressure', price:620, oldPrice:780, emoji:'💉', color:'linear-gradient(135deg,#ede9fe,#ddd6fe)', badge:'best', features:['كشف عدم انتظام النبض','ذاكرة 30 قراءة','ضمان 3 سنين'] },
-  { id:7, name:'Little Doctor LD20', desc:'اقتصادي وموثوق للاستخدام اليومي', cat:'pressure', price:480, oldPrice:580, emoji:'🩸', color:'linear-gradient(135deg,#e0f2fe,#bae6fd)', badge:'hot', features:['شاشة LCD كبيرة','سهل الاستخدام'] },
-  { id:8, name:'Pulse Oximeter بيسيك', desc:'قياس الأكسجين والنبض فوراً', cat:'oxygen', price:220, oldPrice:null, emoji:'🫁', color:'linear-gradient(135deg,#ecfdf5,#d1fae5)', badge:'', features:['نتيجة فورية دقيقة','خفيف وسهل الحمل'] },
-  { id:9, name:'Pulse Oximeter OLED', desc:'شاشة OLED ملونة — قراءة أوضح', cat:'oxygen', price:280, oldPrice:null, emoji:'💫', color:'linear-gradient(135deg,#e0f2fe,#bae6fd)', badge:'new', features:['شاشة OLED ملونة','4 اتجاهات عرض'] },
+const BUNDLES = [
+  {id:'b1',title:'Bundle السكر الكامل',save:'وفّر 130 ج',items:['🩺 جهاز Contour Plus','🧪 شرائط (50)','🪡 لانسيت (100)','🎁 قطن طبي مجاناً'],orig:'680 ج',price:550},
+  {id:'b2',title:'Bundle الضغط والأكسجين',save:'وفّر 100 ج',items:['💉 Omron M2 Basic','🫁 Pulse Oximeter OLED','🎁 استشارة مجاناً'],orig:'900 ج',price:800},
+  {id:'b3',title:'Bundle المتابعة الشاملة',save:'وفّر 250 ج',items:['🩺 جهاز سكر','💉 جهاز ضغط','🫁 Pulse Oximeter','🧪 شرائط (50)','🎁 متابعة شهرية'],orig:'1,350 ج',price:1100},
 ];
 
-const DEFAULT_BUNDLES = [
-  { id:'b1', title:'Bundle السكر الكامل', save:'وفّر 130 ج', items:['🩺 جهاز Contour Plus','🧪 شرائط (50 شريط)','🪡 لانسيت (100 حبة)','🎁 قطن طبي مجاناً'], originalPrice:'680 ج', price:550 },
-  { id:'b2', title:'Bundle الضغط والأكسجين', save:'وفّر 100 ج', items:['💉 جهاز Omron M2 Basic','🫁 Pulse Oximeter OLED','🎁 استشارة صيدلي مجاناً'], originalPrice:'900 ج', price:800 },
-  { id:'b3', title:'Bundle المتابعة الشاملة', save:'وفّر 250 ج', items:['🩺 جهاز سكر Contour Plus','💉 جهاز ضغط Omron M2','🫁 Pulse Oximeter','🧪 شرائط (50)','🎁 متابعة شهرية مجانية'], originalPrice:'1,350 ج', price:1100 },
-];
-
-// ── LOAD STATE ────────────────────────────────────────────────
-function loadState() {
-  try {
-    const s = localStorage.getItem('sehhtak_settings');
-    return s ? JSON.parse(s) : DEFAULT_SETTINGS;
-  } catch(e) { return DEFAULT_SETTINGS; }
-}
-function loadProducts() {
-  try {
-    const p = localStorage.getItem('sehhtak_products');
-    return p ? JSON.parse(p) : DEFAULT_PRODUCTS;
-  } catch(e) { return DEFAULT_PRODUCTS; }
-}
-function saveProducts(prods) {
-  localStorage.setItem('sehhtak_products', JSON.stringify(prods));
-}
-function saveSettingsData(s) {
-  localStorage.setItem('sehhtak_settings', JSON.stringify(s));
-}
-
-let settings = loadState();
-let products = loadProducts();
+let appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
 let currentCat = 'all';
 
-// ── APPLY SETTINGS ────────────────────────────────────────────
-function applySettings() {
-  const wa = settings.wa || '201507222502';
-  const waUrl = `https://wa.me/${wa}`;
-  document.getElementById('wa-topbar-link').href = waUrl;
-  document.getElementById('wa-bar-link').href = waUrl;
-  document.getElementById('wa-float-link').href = waUrl;
+// ══════════════════════════════════════════════════════
+// API
+// ══════════════════════════════════════════════════════
+async function fetchData() {
+  try {
+    const key = appData.settings.masterKey || localStorage.getItem('sehhtak_mk') || '';
+    if (!key) { appData = JSON.parse(JSON.stringify(DEFAULT_DATA)); return; }
+    const res = await fetch(BIN_URL+'/latest', {
+      headers:{'X-Master-Key':key,'X-Bin-Meta':false}
+    });
+    if (!res.ok) throw new Error('fetch failed');
+    const json = await res.json();
+    if (json && json.products) appData = json;
+    else appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    if (key) appData.settings.masterKey = key;
+  } catch(e) {
+    appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
 }
 
-// ── RENDER PRODUCTS ───────────────────────────────────────────
+async function saveData() {
+  const key = appData.settings.masterKey || localStorage.getItem('sehhtak_mk') || '';
+  if (!key) { showMsg('error','ادخل الـ Master Key في الإعدادات أولاً'); return false; }
+  try {
+    const res = await fetch(BIN_URL, {
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':key},
+      body: JSON.stringify(appData)
+    });
+    if (!res.ok) throw new Error('save failed');
+    localStorage.setItem('sehhtak_mk', key);
+    localStorage.setItem('sehhtak_cache', JSON.stringify(appData));
+    return true;
+  } catch(e) {
+    showMsg('error','فشل الحفظ — تأكد من الـ Master Key');
+    return false;
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════
+const CAT_NAMES = {sugar:'🩺 أجهزة قياس السكر',pressure:'💉 أجهزة قياس الضغط',oxygen:'🫁 أجهزة قياس الأكسجين',strips:'🧪 شرائط وملحقات'};
+
 function renderProducts(cat) {
   const container = document.getElementById('products-container');
-  container.innerHTML = '';
-
-  const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
-  const cats = cat === 'all'
-    ? ['sugar','pressure','oxygen','strips']
-    : [cat];
-
-  const catNames = { sugar:'🩺 أجهزة قياس السكر', pressure:'💉 أجهزة قياس الضغط', oxygen:'🫁 أجهزة قياس الأكسجين', strips:'🧪 شرائط وملحقات' };
-
   let html = '';
+  const cats = cat==='all' ? ['sugar','pressure','oxygen','strips'] : cat==='bundles' ? [] : [cat];
 
   cats.forEach(c => {
-    const catProds = filtered.filter(p => p.cat === c);
-    if (!catProds.length) return;
-
-    html += `<div class="section">
-      <div class="section-title">${catNames[c] || c}<div class="section-line"></div></div>
-      <div class="products-grid">`;
-
-    catProds.forEach(p => {
+    const prods = appData.products.filter(p => p.cat===c);
+    if (!prods.length) return;
+    html += `<div class="section"><div class="section-title">${CAT_NAMES[c]}<div class="section-line"></div></div><div class="products-grid">`;
+    prods.forEach(p => {
       const badge = p.badge ? `<span class="product-badge badge-${p.badge}">${p.badge==='best'?'⭐ الأكثر مبيعاً':p.badge==='hot'?'🔥 عرض':'✨ جديد'}</span>` : '';
       const oldPrice = p.oldPrice ? `<div class="price-old">${p.oldPrice} ج</div>` : '';
-      const features = (p.features||[]).map(f => `<div class="product-feature">${f}</div>`).join('');
-
+      const feats = (p.features||[]).map(f=>`<div class="feat">${f}</div>`).join('');
       html += `<div class="product-card">
         <div class="product-img" style="background:${p.color}">${p.emoji}${badge}</div>
         <div class="product-info">
           <div class="product-name">${p.name}</div>
           <div class="product-desc">${p.desc}</div>
-          <div class="product-features">${features}</div>
+          <div class="product-features">${feats}</div>
           <div class="price-row">
-            <div class="price-group">
-              <div class="price">${p.price} ج</div>
-              ${oldPrice}
-            </div>
+            <div><div class="price">${p.price} ج</div>${oldPrice}</div>
             <button class="order-btn" onclick="orderProduct('${p.name.replace(/'/g,"\\'")}','${p.price}')">اطلب</button>
           </div>
         </div>
@@ -826,36 +579,43 @@ function renderProducts(cat) {
     html += `</div></div>`;
   });
 
-  // Bundles
-  if (cat === 'all' || cat === 'bundles') {
+  if (cat==='all' || cat==='bundles') {
     html += `<div class="section"><div class="section-title">📦 Bundles — وفّر أكتر<div class="section-line"></div></div>`;
-    DEFAULT_BUNDLES.forEach(b => {
-      const items = b.items.map(i => `<div class="bundle-item"><span>${i}</span></div>`).join('');
+    BUNDLES.forEach(b => {
       html += `<div class="bundle-card">
-        <div class="bundle-header">
-          <div class="bundle-title">${b.title}</div>
-          <div class="bundle-save">${b.save}</div>
-        </div>
+        <div class="bundle-header"><div class="bundle-title">${b.title}</div><div class="bundle-save">${b.save}</div></div>
         <div class="bundle-body">
-          <div class="bundle-items">${items}</div>
+          <div>${b.items.map(i=>`<div class="bundle-item">${i}</div>`).join('')}</div>
           <div class="bundle-prices">
-            <div class="bundle-original">الأصلي: <span>${b.originalPrice}</span></div>
+            <div class="bundle-original">الأصلي: <span>${b.orig}</span></div>
             <div><div class="bundle-price">${b.price} ج</div><div class="bundle-saving">✅ ${b.save}</div></div>
           </div>
-          <button class="bundle-order-btn" onclick="orderProduct('${b.title}','${b.price}')">🛒 اطلب ${b.title}</button>
+          <button class="bundle-btn" onclick="orderProduct('${b.title}','${b.price}')">🛒 اطلب الـ Bundle</button>
         </div>
       </div>`;
     });
     html += `</div>`;
   }
 
-  if (!html) {
-    html = `<div class="empty-state"><div class="empty-state-icon">📦</div><div class="empty-state-text">لا توجد منتجات في هذه الفئة</div></div>`;
-  }
-
+  if (!html) html = `<div class="empty"><div class="empty-icon">📦</div><div class="empty-text">لا توجد منتجات في هذه الفئة</div></div>`;
   container.innerHTML = html;
 }
 
+function renderAdminProducts() {
+  const list = document.getElementById('admin-products-list');
+  list.innerHTML = appData.products.map(p => `
+    <div class="admin-product-item">
+      <div class="admin-product-info">
+        <div class="name">${p.emoji} ${p.name}</div>
+        <div class="price">${p.price} ج</div>
+      </div>
+      <button class="btn-danger" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+    </div>`).join('') || '<div style="text-align:center;color:#94a3b8;padding:16px;font-size:12px">لا توجد منتجات</div>';
+}
+
+// ══════════════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════════════
 function filterCat(cat, btn) {
   currentCat = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -863,147 +623,131 @@ function filterCat(cat, btn) {
   renderProducts(cat);
 }
 
-// ── ORDER ─────────────────────────────────────────────────────
 function orderProduct(name, price) {
-  const wa = settings.wa || '201507222502';
+  const wa = appData.settings.wa || '201507222502';
   const msg = encodeURIComponent(`أهلاً صحتك! 👋\n\nعايز أطلب:\n🛒 ${name}\n💰 السعر: ${price} ج\n\nمحتاج:\n1. عنوان التوصيل\n2. رقم موبايل للتأكيد`);
   window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
 }
-function openWA(e) {
-  e.preventDefault();
-  const wa = settings.wa || '201507222502';
+function openWA() {
+  const wa = appData.settings.wa || '201507222502';
   window.open(`https://wa.me/${wa}`, '_blank');
 }
-function openSocial(e, platform) {
-  e.preventDefault();
-  const url = settings[platform];
-  if (url && url.startsWith('http')) {
-    window.open(url, '_blank');
-  } else {
-    alert('الصفحة لسه مش جاهزة — هنضيف الرابط قريباً! 🚀');
+function openSocial(platform) {
+  const url = appData.settings[platform];
+  if (url && url.startsWith('http')) window.open(url, '_blank');
+  else alert('الصفحة هتكون جاهزة قريباً! 🚀');
+}
+
+// ══════════════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════════════
+function openAdmin() {
+  const pass = prompt('كلمة المرور:');
+  if (pass !== ADMIN_PASS) { alert('كلمة مرور غلط!'); return; }
+  document.getElementById('s-masterkey').value = appData.settings.masterKey || localStorage.getItem('sehhtak_mk') || '';
+  document.getElementById('s-wa').value = appData.settings.wa || '';
+  document.getElementById('s-fb').value = appData.settings.fb || '';
+  document.getElementById('s-ig').value = appData.settings.ig || '';
+  document.getElementById('s-tt').value = appData.settings.tt || '';
+  renderAdminProducts();
+  document.getElementById('admin-overlay').classList.add('show');
+}
+function closeAdmin() { document.getElementById('admin-overlay').classList.remove('show'); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.admin-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='products')||(i===1&&tab==='settings')));
+  document.getElementById('tab-products').classList.toggle('show', tab==='products');
+  document.getElementById('tab-settings').classList.toggle('show', tab==='settings');
+}
+
+function showAddForm() { document.getElementById('add-form').classList.remove('hidden'); }
+function hideAddForm() { document.getElementById('add-form').classList.add('hidden'); }
+
+async function addProduct() {
+  const name = document.getElementById('f-name').value.trim();
+  const price = parseInt(document.getElementById('f-price').value);
+  if (!name || !price) { alert('ادخل الاسم والسعر على الأقل'); return; }
+  const btn = document.getElementById('btn-add-product');
+  btn.disabled = true; btn.innerHTML = 'جاري الحفظ...<span class="spinner"></span>';
+  const features = document.getElementById('f-features').value.split('\n').map(f=>f.trim()).filter(f=>f);
+  appData.products.push({
+    id: Date.now(),
+    name, desc: document.getElementById('f-desc').value.trim(),
+    cat: document.getElementById('f-cat').value,
+    price, oldPrice: parseInt(document.getElementById('f-oldprice').value)||null,
+    emoji: document.getElementById('f-emoji').value || '📦',
+    color: document.getElementById('f-color').value,
+    badge: document.getElementById('f-badge').value,
+    features
+  });
+  const ok = await saveData();
+  btn.disabled = false; btn.innerHTML = '✅ إضافة';
+  if (ok) {
+    showMsg('success','✅ تم إضافة المنتج!');
+    renderAdminProducts(); renderProducts(currentCat);
+    hideAddForm();
+    ['f-name','f-desc','f-price','f-oldprice','f-emoji','f-features'].forEach(id => document.getElementById(id).value='');
   }
 }
 
-// ── ADMIN ─────────────────────────────────────────────────────
-function openAdmin() {
-  // Simple password check
-  const pass = prompt('أدخل كلمة المرور:');
-  if (pass !== 'sehhtak2025') { alert('كلمة مرور غلط!'); return; }
-
-  document.getElementById('admin-wa').value = settings.wa || '';
-  document.getElementById('admin-fb').value = settings.fb || '';
-  document.getElementById('admin-ig').value = settings.ig || '';
-  document.getElementById('admin-tt').value = settings.tt || '';
-  renderAdminProducts();
-  document.getElementById('admin-overlay').classList.add('show');
-  document.getElementById('admin-main-view').classList.remove('hidden');
-  document.getElementById('admin-add-view').classList.add('hidden');
-}
-function closeAdmin() {
-  document.getElementById('admin-overlay').classList.remove('show');
-}
-function saveSettings() {
-  settings.wa = document.getElementById('admin-wa').value.trim();
-  settings.fb = document.getElementById('admin-fb').value.trim();
-  settings.ig = document.getElementById('admin-ig').value.trim();
-  settings.tt = document.getElementById('admin-tt').value.trim();
-  saveSettingsData(settings);
-  applySettings();
-  alert('✅ تم الحفظ بنجاح!');
-  closeAdmin();
-}
-function renderAdminProducts() {
-  const list = document.getElementById('admin-products-list');
-  list.innerHTML = products.map(p => `
-    <div class="admin-product-item">
-      <div>
-        <div class="admin-product-name">${p.emoji} ${p.name}</div>
-        <div class="admin-product-price">${p.price} ج</div>
-      </div>
-      <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-    </div>`).join('');
-}
-function deleteProduct(id) {
+async function deleteProduct(id) {
   if (!confirm('تأكيد الحذف؟')) return;
-  products = products.filter(p => p.id !== id);
-  saveProducts(products);
-  renderAdminProducts();
-  renderProducts(currentCat);
-}
-function showAddProduct() {
-  document.getElementById('admin-main-view').classList.add('hidden');
-  document.getElementById('admin-add-view').classList.remove('hidden');
-}
-function backToMain() {
-  document.getElementById('admin-main-view').classList.remove('hidden');
-  document.getElementById('admin-add-view').classList.add('hidden');
-}
-function addProduct() {
-  const name = document.getElementById('new-name').value.trim();
-  const price = parseInt(document.getElementById('new-price').value);
-  if (!name || !price) { alert('ادخل الاسم والسعر على الأقل'); return; }
-
-  const features = document.getElementById('new-features').value
-    .split('\n').map(f => f.trim()).filter(f => f);
-
-  const newProd = {
-    id: Date.now(),
-    name,
-    desc: document.getElementById('new-desc').value.trim(),
-    cat:  document.getElementById('new-cat').value,
-    price,
-    oldPrice: parseInt(document.getElementById('new-old-price').value) || null,
-    emoji: document.getElementById('new-emoji').value || '📦',
-    color: document.getElementById('new-color').value,
-    badge: document.getElementById('new-badge').value,
-    features,
-  };
-
-  products.push(newProd);
-  saveProducts(products);
-  renderAdminProducts();
-  renderProducts(currentCat);
-  backToMain();
-  alert('✅ تم إضافة المنتج!');
-
-  // Clear form
-  ['new-name','new-desc','new-price','new-old-price','new-emoji','new-features'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  appData.products = appData.products.filter(p => p.id !== id);
+  const ok = await saveData();
+  if (ok) { showMsg('success','✅ تم الحذف!'); renderAdminProducts(); renderProducts(currentCat); }
 }
 
-// ── PWA ───────────────────────────────────────────────────────
+async function saveSettings() {
+  const btn = document.getElementById('btn-save-settings');
+  btn.disabled = true; btn.innerHTML = 'جاري الحفظ...<span class="spinner"></span>';
+  const mk = document.getElementById('s-masterkey').value.trim();
+  if (mk) { appData.settings.masterKey = mk; localStorage.setItem('sehhtak_mk', mk); }
+  appData.settings.wa = document.getElementById('s-wa').value.trim();
+  appData.settings.fb = document.getElementById('s-fb').value.trim();
+  appData.settings.ig = document.getElementById('s-ig').value.trim();
+  appData.settings.tt = document.getElementById('s-tt').value.trim();
+  const ok = await saveData();
+  btn.disabled = false; btn.innerHTML = '💾 حفظ الإعدادات';
+  if (ok) showMsg('success','✅ تم حفظ الإعدادات!');
+}
+
+function showMsg(type, text) {
+  const el = document.getElementById(type+'-msg');
+  el.textContent = text; el.style.display = 'block';
+  setTimeout(() => el.style.display='none', 3000);
+}
+
+// ══════════════════════════════════════════════════════
+// PWA
+// ══════════════════════════════════════════════════════
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
+  e.preventDefault(); deferredPrompt = e;
   document.getElementById('install-banner').classList.add('show');
 });
 document.getElementById('install-btn').addEventListener('click', async () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
+  await deferredPrompt.userChoice;
   deferredPrompt = null;
   document.getElementById('install-banner').classList.remove('show');
 });
 
-// Create manifest dynamically
-const manifest = {
-  name: 'صحتك • Sehhtak',
-  short_name: 'صحتك',
-  description: 'مستلزمات طبية أصلية',
-  start_url: '/',
-  display: 'standalone',
-  background_color: '#0D1F4E',
-  theme_color: '#0D1F4E',
-  icons: [{ src: 'https://via.placeholder.com/192x192/0D1F4E/00ACC1?text=S', sizes: '192x192', type: 'image/png' }]
-};
-const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
-document.getElementById('manifest-link').href = URL.createObjectURL(blob);
-
-// ── INIT ──────────────────────────────────────────────────────
-applySettings();
-renderProducts('all');
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+async function init() {
+  // Try cache first
+  const cached = localStorage.getItem('sehhtak_cache');
+  if (cached) { try { appData = JSON.parse(cached); } catch(e) {} }
+  // Try fetch from JSONBin
+  const mk = localStorage.getItem('sehhtak_mk');
+  if (mk) { appData.settings.masterKey = mk; await fetchData(); }
+  renderProducts('all');
+  // Hide loading
+  setTimeout(() => document.getElementById('loading').classList.add('hide'), 800);
+}
+init();
 </script>
 
 
