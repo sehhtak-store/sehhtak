@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- saved from url=(0069)file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html -->
+<!-- saved from url=(0040)https://sehhtak-store.github.io/sehhtak/ -->
 <html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>صحتك • Sehhtak</title>
 <meta name="description" content="مستلزمات طبية أصلية — توصيل لبيتك مع استشارة صيدلي مجاناً">
 <meta name="theme-color" content="#0D1F4E">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="صحتك">
+
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap');
 :root{
@@ -183,6 +183,13 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-left:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+
+<link rel="manifest" id="pwa-manifest">
+<link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/0D1F4E/00ACC1?text=S">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="صحتك">
+<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
 
@@ -308,7 +315,7 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 </div>
 
 <!-- WA BAR -->
-<a class="wa-bar" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openWA();return false">
+<a class="wa-bar" href="#" onclick="openWA();return false">
   <span>📞</span><span>اطلب دلوقتي على واتساب</span>
 </a>
 
@@ -460,15 +467,15 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
   <div class="footer-logo">صحتك <span>•</span> Sehhtak</div>
   <div class="footer-text">مستلزمات طبية أصلية — توصيل لحد بيتك</div>
   <div class="footer-social">
-    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openWA();return false">💬 واتساب</a>
-    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openSocial(&#39;fb&#39;);return false">📘 فيسبوك</a>
-    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openSocial(&#39;ig&#39;);return false">📸 إنستجرام</a>
-    <a class="footer-social-btn" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openSocial(&#39;tt&#39;);return false">🎵 تيك توك</a>
+    <a class="footer-social-btn" href="#" onclick="openWA();return false">💬 واتساب</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;fb&#39;);return false">📘 فيسبوك</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;ig&#39;);return false">📸 إنستجرام</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;tt&#39;);return false">🎵 تيك توك</a>
   </div>
   <div class="footer-copy">© 2025 صحتك • Sehhtak</div>
 </div>
 
-<a class="wa-float" href="file:///C:/Users/mohamed.mansour.MED-RIGHT/Downloads/index%20(4).html#" onclick="openWA();return false">💬</a>
+<a class="wa-float" href="#" onclick="openWA();return false">💬</a>
 
 <div class="install-banner" id="install-banner">
   <div><div class="install-text">📲 نزّل التطبيق</div><div class="install-sub">أضف صحتك على شاشتك</div></div>
@@ -768,4 +775,52 @@ init();
 
 
 
+
+<script>
+// ── PWA MANIFEST ──────────────────────────────────────────────
+const manifest = {
+  name: "صحتك • Sehhtak",
+  short_name: "صحتك",
+  description: "مستلزمات طبية أصلية — توصيل لبيتك",
+  start_url: "./",
+  display: "standalone",
+  orientation: "portrait",
+  background_color: "#0D1F4E",
+  theme_color: "#0D1F4E",
+  lang: "ar",
+  icons: [
+    { src: "https://via.placeholder.com/192x192/0D1F4E/00ACC1?text=S", sizes: "192x192", type: "image/png", purpose: "any maskable" },
+    { src: "https://via.placeholder.com/512x512/0D1F4E/00ACC1?text=S", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+  ],
+  screenshots: [],
+  categories: ["health", "medical", "shopping"]
+};
+const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+const manifestURL = URL.createObjectURL(blob);
+document.getElementById('pwa-manifest').setAttribute('href', manifestURL);
+
+// ── SERVICE WORKER ─────────────────────────────────────────────
+const swCode = `
+const CACHE = 'sehhtak-v1';
+const ASSETS = ['./'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+});
+`;
+if ('serviceWorker' in navigator) {
+  const swBlob = new Blob([swCode], {type: 'application/javascript'});
+  const swURL = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swURL)
+    .then(() => console.log('SW registered'))
+    .catch(e => console.log('SW error:', e));
+}
+</script>
 </body></html>
