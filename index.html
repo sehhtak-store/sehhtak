@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)https://sehhtak-store.github.io/sehhtak/ -->
-<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>صحتك • Sehhtak</title>
 <meta name="description" content="مستلزمات طبية أصلية — توصيل لبيتك مع استشارة صيدلي مجاناً">
 <meta name="theme-color" content="#0D1F4E">
 
+<!-- PWA Meta Tags -->
+<link rel="manifest" id="pwa-manifest">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSIzNiIgZmlsbD0iIzBEMUY0RSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwQUNDMSI+4pqVDjwvdGV4dD48L3N2Zz4=">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="صحتك">
+<meta name="mobile-web-app-capable" content="yes">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap');
@@ -19,7 +26,6 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh;overflow-x:hidden}
 
-/* LOADING */
 #loading{position:fixed;inset:0;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
 #loading.hide{opacity:0;pointer-events:none}
 .loading-logo{font-size:48px;margin-bottom:16px;animation:bounce 1s infinite}
@@ -27,7 +33,6 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .loading-sub{color:rgba(255,255,255,.5);font-size:12px;margin-top:6px}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-/* ADMIN */
 #admin-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
 #admin-overlay.show{display:flex}
 .admin-box{background:var(--white);border-radius:20px;width:100%;max-width:480px;padding:22px;margin:auto}
@@ -54,10 +59,9 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .success-msg{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:10px 14px;font-size:12px;color:#16a34a;font-weight:700;margin-bottom:12px;display:none}
 .error-msg{background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;font-size:12px;color:#dc2626;font-weight:700;margin-bottom:12px;display:none}
 
-/* TOPBAR */
 .topbar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .brand{display:flex;align-items:center;gap:8px}
-.brand-icon{width:32px;height:32px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand-icon{width:32px;height:32px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--cyan)}
 .brand-name{font-size:16px;font-weight:900;color:var(--navy)}
 .brand-name span{color:var(--cyan)}
 .topbar-right{display:flex;align-items:center;gap:8px}
@@ -65,7 +69,6 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .icon-btn:hover{background:var(--gray-200)}
 .wa-btn{background:var(--wa);color:var(--white);border:none;padding:6px 14px;border-radius:20px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px}
 
-/* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,#1a3a7c 50%,var(--blue) 100%);padding:26px 20px 22px;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(0,172,193,.15),transparent 60%)}
 .hero-content{position:relative;z-index:2}
@@ -76,34 +79,25 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .hero-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
 .hero-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700}
 
-/* WA BAR */
 .wa-bar{background:var(--wa);padding:11px 20px;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
 .wa-bar span{color:var(--white);font-size:13px;font-weight:800}
 
-/* SOCIAL BAR */
 .social-bar{background:var(--navy);padding:9px 16px;display:flex;align-items:center;justify-content:center;gap:10px}
 .social-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:var(--white);padding:5px 12px;border-radius:50px;font-size:11px;font-weight:700;text-decoration:none;transition:all .2s;cursor:pointer}
 .social-btn:hover{background:rgba(255,255,255,.2)}
 .social-label{font-size:10px;color:rgba(255,255,255,.4)}
 
-/* FILTERS */
 .filters-wrap{padding:14px 16px 0;overflow-x:auto;display:flex;gap:8px;-webkit-overflow-scrolling:touch}
 .filters-wrap::-webkit-scrollbar{display:none}
 .filter-btn{background:var(--white);border:1.5px solid var(--gray-200);color:var(--gray-600);padding:7px 14px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Cairo',sans-serif;transition:all .2s;flex-shrink:0}
 .filter-btn.active,.filter-btn:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
 
-/* MAIN */
 .main{padding:0 16px 80px}
-
-/* SECTION */
 .section{padding-top:18px}
 .section-title{font-size:14px;font-weight:900;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .section-line{flex:1;height:1.5px;background:linear-gradient(to left,transparent,var(--gray-200))}
-
-/* PRODUCT GRID */
 .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 
-/* PRODUCT CARD */
 .product-card{background:var(--white);border-radius:16px;border:1px solid var(--gray-200);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s}
 .product-card:active{transform:scale(.98)}
 .product-img{height:115px;display:flex;align-items:center;justify-content:center;position:relative;font-size:46px}
@@ -123,7 +117,6 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .order-btn{background:var(--navy);color:var(--white);border:none;padding:6px 11px;border-radius:9px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
 .order-btn:hover{background:var(--blue)}
 
-/* BUNDLE */
 .bundle-card{background:var(--white);border-radius:16px;border:2px solid var(--cyan);margin-bottom:11px;overflow:hidden}
 .bundle-header{background:linear-gradient(135deg,var(--navy),var(--blue));padding:12px 15px;display:flex;align-items:center;justify-content:space-between}
 .bundle-title{font-size:13px;font-weight:800;color:var(--white)}
@@ -137,7 +130,6 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .bundle-saving{font-size:10px;color:var(--green);font-weight:700}
 .bundle-btn{width:100%;background:linear-gradient(135deg,var(--cyan),#0284c7);color:var(--white);border:none;padding:12px;border-radius:11px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif}
 
-/* WHY */
 .why{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:18px;padding:18px;margin:18px 0;color:var(--white)}
 .why-title{font-size:14px;font-weight:900;text-align:center;margin-bottom:12px}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
@@ -145,14 +137,12 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .why-icon{font-size:20px;margin-bottom:4px}
 .why-text{font-size:10px;font-weight:700;opacity:.9;line-height:1.4}
 
-/* PHARMA NOTE */
 .pharma-note{background:#f0fdf4;border:1.5px solid #86efac;border-radius:14px;padding:13px;margin:14px 0}
 .pharma-header{display:flex;align-items:center;gap:7px;margin-bottom:5px}
 .pharma-icon{font-size:20px}
 .pharma-title{font-size:12px;font-weight:800;color:#15803d}
 .pharma-text{font-size:11px;color:#166534;line-height:1.65}
 
-/* FOOTER */
 .footer{background:var(--navy);padding:22px 18px;text-align:center}
 .footer-logo{font-size:17px;font-weight:900;color:var(--white);margin-bottom:4px}
 .footer-logo span{color:var(--cyan)}
@@ -161,11 +151,9 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .footer-social-btn{background:rgba(255,255,255,.1);color:var(--white);padding:6px 14px;border-radius:50px;font-size:10px;font-weight:700;text-decoration:none;border:1px solid rgba(255,255,255,.15)}
 .footer-copy{font-size:9px;color:rgba(255,255,255,.25)}
 
-/* WA FLOAT */
 .wa-float{position:fixed;bottom:20px;left:20px;background:var(--wa);color:var(--white);width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,.5);cursor:pointer;z-index:500;animation:pulse-wa 2.5s infinite;text-decoration:none}
 @keyframes pulse-wa{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,.7)}}
 
-/* INSTALL */
 .install-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--navy);padding:13px 16px;flex-direction:row;align-items:center;justify-content:space-between;z-index:400;border-top:2px solid var(--cyan)}
 .install-banner.show{display:flex}
 .install-text{font-size:12px;color:var(--white);font-weight:700}
@@ -173,23 +161,14 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 .install-btn{background:var(--cyan);color:var(--white);border:none;padding:8px 16px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:800;cursor:pointer}
 .install-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:18px;cursor:pointer}
 
-/* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:var(--gray-400)}
 .empty-icon{font-size:44px;margin-bottom:10px}
 .empty-text{font-size:13px;font-weight:600}
 .hidden{display:none!important}
 
-/* SPINNER */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-left:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
-
-<link rel="manifest" id="pwa-manifest">
-<link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/0D1F4E/00ACC1?text=S">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="صحتك">
-<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
 
@@ -207,21 +186,16 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
       <span>⚙️ لوحة التحكم</span>
       <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
-
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab(&#39;products&#39;)">📦 المنتجات</button>
-      <button class="admin-tab" onclick="switchTab(&#39;settings&#39;)">⚙️ الإعدادات</button>
+      <button class="admin-tab active" onclick="switchTab('products')">📦 المنتجات</button>
+      <button class="admin-tab" onclick="switchTab('settings')">⚙️ الإعدادات</button>
     </div>
-
     <div class="success-msg" id="success-msg">✅ تم الحفظ بنجاح!</div>
     <div class="error-msg" id="error-msg">❌ حدث خطأ — تأكد من الإعدادات</div>
 
-    <!-- PRODUCTS TAB -->
     <div class="admin-section show" id="tab-products">
       <div id="admin-products-list"></div>
       <button class="btn-save" style="background:linear-gradient(135deg,#00796B,#00ACC1)" onclick="showAddForm()">+ إضافة منتج جديد</button>
-
-      <!-- ADD FORM -->
       <div id="add-form" class="hidden">
         <div class="admin-divider"></div>
         <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px">➕ منتج جديد</div>
@@ -272,7 +246,6 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
       </div>
     </div>
 
-    <!-- SETTINGS TAB -->
     <div class="admin-section" id="tab-settings">
       <div class="admin-field">
         <label>🔑 JSONBin Master Key</label>
@@ -314,30 +287,26 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
   </div>
 </div>
 
-<!-- WA BAR -->
 <a class="wa-bar" href="#" onclick="openWA();return false">
   <span>📞</span><span>اطلب دلوقتي على واتساب</span>
 </a>
 
-<!-- SOCIAL BAR -->
 <div class="social-bar">
   <span class="social-label">تابعنا:</span>
-  <span class="social-btn" onclick="openSocial(&#39;fb&#39;)">📘 فيسبوك</span>
-  <span class="social-btn" onclick="openSocial(&#39;ig&#39;)">📸 إنستجرام</span>
-  <span class="social-btn" onclick="openSocial(&#39;tt&#39;)">🎵 تيك توك</span>
+  <span class="social-btn" onclick="openSocial('fb')">📘 فيسبوك</span>
+  <span class="social-btn" onclick="openSocial('ig')">📸 إنستجرام</span>
+  <span class="social-btn" onclick="openSocial('tt')">🎵 تيك توك</span>
 </div>
 
-<!-- FILTERS -->
 <div class="filters-wrap">
-  <button class="filter-btn active" onclick="filterCat(&#39;all&#39;,this)">🏷️ الكل</button>
-  <button class="filter-btn" onclick="filterCat(&#39;sugar&#39;,this)">🩺 السكر</button>
-  <button class="filter-btn" onclick="filterCat(&#39;pressure&#39;,this)">💉 الضغط</button>
-  <button class="filter-btn" onclick="filterCat(&#39;oxygen&#39;,this)">🫁 الأكسجين</button>
-  <button class="filter-btn" onclick="filterCat(&#39;strips&#39;,this)">🧪 ملحقات</button>
-  <button class="filter-btn" onclick="filterCat(&#39;bundles&#39;,this)">📦 Bundles</button>
+  <button class="filter-btn active" onclick="filterCat('all',this)">🏷️ الكل</button>
+  <button class="filter-btn" onclick="filterCat('sugar',this)">🩺 السكر</button>
+  <button class="filter-btn" onclick="filterCat('pressure',this)">💉 الضغط</button>
+  <button class="filter-btn" onclick="filterCat('oxygen',this)">🫁 الأكسجين</button>
+  <button class="filter-btn" onclick="filterCat('strips',this)">🧪 ملحقات</button>
+  <button class="filter-btn" onclick="filterCat('bundles',this)">📦 Bundles</button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="why">
     <div class="why-title">⭐ ليه تختار صحتك؟</div>
@@ -348,129 +317,21 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
       <div class="why-item"><div class="why-icon">🔄</div><div class="why-text">استبدال مجاني لو في مشكلة</div></div>
     </div>
   </div>
-  <div id="products-container"><div class="section"><div class="section-title">🩺 أجهزة قياس السكر<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#e3f0ff,#dbeafe)">🩺<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
-        <div class="product-info">
-          <div class="product-name">Contour Plus جهاز قياس سكر</div>
-          <div class="product-desc">دقة عالية — نتيجة في 5 ثواني</div>
-          <div class="product-features"><div class="feat">دقة ±10% معتمدة</div><div class="feat">ذاكرة 480 قراءة</div><div class="feat">شاشة كبيرة</div></div>
-          <div class="price-row">
-            <div><div class="price">420 ج</div><div class="price-old">550 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;Contour Plus جهاز قياس سكر&#39;,&#39;420&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">🔬<span class="product-badge badge-hot">🔥 عرض</span></div>
-        <div class="product-info">
-          <div class="product-name">Accu-Chek Active جهاز سكر</div>
-          <div class="product-desc">الأشهر في مصر — موثوق طبياً</div>
-          <div class="product-features"><div class="feat">لا يحتاج coding</div><div class="feat">ذاكرة 500 قراءة</div><div class="feat">ضمان سنتين</div></div>
-          <div class="price-row">
-            <div><div class="price">380 ج</div><div class="price-old">480 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;Accu-Chek Active جهاز سكر&#39;,&#39;380&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div></div></div><div class="section"><div class="section-title">💉 أجهزة قياس الضغط<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe)">💉<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
-        <div class="product-info">
-          <div class="product-name">Omron M2 Basic</div>
-          <div class="product-desc">موصى به طبياً</div>
-          <div class="product-features"><div class="feat">كشف عدم انتظام النبض</div><div class="feat">ضمان 3 سنين</div></div>
-          <div class="price-row">
-            <div><div class="price">620 ج</div><div class="price-old">780 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;Omron M2 Basic&#39;,&#39;620&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">🩸<span class="product-badge badge-hot">🔥 عرض</span></div>
-        <div class="product-info">
-          <div class="product-name">Little Doctor LD20</div>
-          <div class="product-desc">اقتصادي وموثوق</div>
-          <div class="product-features"><div class="feat">شاشة LCD كبيرة</div><div class="feat">سهل الاستخدام</div></div>
-          <div class="price-row">
-            <div><div class="price">480 ج</div><div class="price-old">580 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;Little Doctor LD20&#39;,&#39;480&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div></div></div><div class="section"><div class="section-title">🫁 أجهزة قياس الأكسجين<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd)">🫁<span class="product-badge badge-new">✨ جديد</span></div>
-        <div class="product-info">
-          <div class="product-name">Pulse Oximeter OLED</div>
-          <div class="product-desc">شاشة ملونة — قراءة أوضح</div>
-          <div class="product-features"><div class="feat">شاشة OLED</div><div class="feat">4 اتجاهات عرض</div></div>
-          <div class="price-row">
-            <div><div class="price">280 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;Pulse Oximeter OLED&#39;,&#39;280&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div></div></div><div class="section"><div class="section-title">🧪 شرائط وملحقات<div class="section-line"></div></div><div class="products-grid"><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7)">🧪<span class="product-badge badge-best">⭐ الأكثر مبيعاً</span></div>
-        <div class="product-info">
-          <div class="product-name">شرائط Contour Plus (50)</div>
-          <div class="product-desc">متوافقة مع Contour Plus</div>
-          <div class="product-features"><div class="feat">نتيجة في 5 ثواني</div><div class="feat">كمية دم صغيرة</div></div>
-          <div class="price-row">
-            <div><div class="price">200 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;شرائط Contour Plus (50)&#39;,&#39;200&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div><div class="product-card">
-        <div class="product-img" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)">🪡<span class="product-badge badge-new">✨ جديد</span></div>
-        <div class="product-info">
-          <div class="product-name">لانسيت (100 حبة)</div>
-          <div class="product-desc">إبر قياس معقمة</div>
-          <div class="product-features"><div class="feat">معقمة فردياً</div><div class="feat">لكل الأجهزة</div></div>
-          <div class="price-row">
-            <div><div class="price">60 ج</div></div>
-            <button class="order-btn" onclick="orderProduct(&#39;لانسيت (100 حبة)&#39;,&#39;60&#39;)">اطلب</button>
-          </div>
-        </div>
-      </div></div></div><div class="section"><div class="section-title">📦 Bundles — وفّر أكتر<div class="section-line"></div></div><div class="bundle-card">
-        <div class="bundle-header"><div class="bundle-title">Bundle السكر الكامل</div><div class="bundle-save">وفّر 130 ج</div></div>
-        <div class="bundle-body">
-          <div><div class="bundle-item">🩺 جهاز Contour Plus</div><div class="bundle-item">🧪 شرائط (50)</div><div class="bundle-item">🪡 لانسيت (100)</div><div class="bundle-item">🎁 قطن طبي مجاناً</div></div>
-          <div class="bundle-prices">
-            <div class="bundle-original">الأصلي: <span>680 ج</span></div>
-            <div><div class="bundle-price">550 ج</div><div class="bundle-saving">✅ وفّر 130 ج</div></div>
-          </div>
-          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle السكر الكامل&#39;,&#39;550&#39;)">🛒 اطلب الـ Bundle</button>
-        </div>
-      </div><div class="bundle-card">
-        <div class="bundle-header"><div class="bundle-title">Bundle الضغط والأكسجين</div><div class="bundle-save">وفّر 100 ج</div></div>
-        <div class="bundle-body">
-          <div><div class="bundle-item">💉 Omron M2 Basic</div><div class="bundle-item">🫁 Pulse Oximeter OLED</div><div class="bundle-item">🎁 استشارة مجاناً</div></div>
-          <div class="bundle-prices">
-            <div class="bundle-original">الأصلي: <span>900 ج</span></div>
-            <div><div class="bundle-price">800 ج</div><div class="bundle-saving">✅ وفّر 100 ج</div></div>
-          </div>
-          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle الضغط والأكسجين&#39;,&#39;800&#39;)">🛒 اطلب الـ Bundle</button>
-        </div>
-      </div><div class="bundle-card">
-        <div class="bundle-header"><div class="bundle-title">Bundle المتابعة الشاملة</div><div class="bundle-save">وفّر 250 ج</div></div>
-        <div class="bundle-body">
-          <div><div class="bundle-item">🩺 جهاز سكر</div><div class="bundle-item">💉 جهاز ضغط</div><div class="bundle-item">🫁 Pulse Oximeter</div><div class="bundle-item">🧪 شرائط (50)</div><div class="bundle-item">🎁 متابعة شهرية</div></div>
-          <div class="bundle-prices">
-            <div class="bundle-original">الأصلي: <span>1,350 ج</span></div>
-            <div><div class="bundle-price">1100 ج</div><div class="bundle-saving">✅ وفّر 250 ج</div></div>
-          </div>
-          <button class="bundle-btn" onclick="orderProduct(&#39;Bundle المتابعة الشاملة&#39;,&#39;1100&#39;)">🛒 اطلب الـ Bundle</button>
-        </div>
-      </div></div></div>
+  <div id="products-container"></div>
   <div class="pharma-note">
     <div class="pharma-header"><div class="pharma-icon">💊</div><div class="pharma-title">نصيحة فريق صحتك</div></div>
     <div class="pharma-text">مش بس بنبيع منتجات — بنتأكد إن المنتج الصح لحالتك. ابعتلنا رسالة وهنساعدك تختار الأنسب ليك مجاناً. 🌿</div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
   <div class="footer-logo">صحتك <span>•</span> Sehhtak</div>
   <div class="footer-text">مستلزمات طبية أصلية — توصيل لحد بيتك</div>
   <div class="footer-social">
     <a class="footer-social-btn" href="#" onclick="openWA();return false">💬 واتساب</a>
-    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;fb&#39;);return false">📘 فيسبوك</a>
-    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;ig&#39;);return false">📸 إنستجرام</a>
-    <a class="footer-social-btn" href="#" onclick="openSocial(&#39;tt&#39;);return false">🎵 تيك توك</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial('fb');return false">📘 فيسبوك</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial('ig');return false">📸 إنستجرام</a>
+    <a class="footer-social-btn" href="#" onclick="openSocial('tt');return false">🎵 تيك توك</a>
   </div>
   <div class="footer-copy">© 2025 صحتك • Sehhtak</div>
 </div>
@@ -480,7 +341,7 @@ body{font-family:'Cairo',sans-serif;background:var(--gray-50);color:var(--gray-9
 <div class="install-banner" id="install-banner">
   <div><div class="install-text">📲 نزّل التطبيق</div><div class="install-sub">أضف صحتك على شاشتك</div></div>
   <button class="install-btn" id="install-btn">تثبيت</button>
-  <button class="install-close" onclick="document.getElementById(&#39;install-banner&#39;).classList.remove(&#39;show&#39;)">✕</button>
+  <button class="install-close" onclick="document.getElementById('install-banner').classList.remove('show')">✕</button>
 </div>
 
 <script>
@@ -570,6 +431,7 @@ function renderProducts(cat) {
       const badge = p.badge ? `<span class="product-badge badge-${p.badge}">${p.badge==='best'?'⭐ الأكثر مبيعاً':p.badge==='hot'?'🔥 عرض':'✨ جديد'}</span>` : '';
       const oldPrice = p.oldPrice ? `<div class="price-old">${p.oldPrice} ج</div>` : '';
       const feats = (p.features||[]).map(f=>`<div class="feat">${f}</div>`).join('');
+      const safeName = p.name.replace(/'/g,"\\'");
       html += `<div class="product-card">
         <div class="product-img" style="background:${p.color}">${p.emoji}${badge}</div>
         <div class="product-info">
@@ -578,7 +440,7 @@ function renderProducts(cat) {
           <div class="product-features">${feats}</div>
           <div class="price-row">
             <div><div class="price">${p.price} ج</div>${oldPrice}</div>
-            <button class="order-btn" onclick="orderProduct('${p.name.replace(/'/g,"\\'")}','${p.price}')">اطلب</button>
+            <button class="order-btn" onclick="orderProduct('${safeName}','${p.price}')">اطلب</button>
           </div>
         </div>
       </div>`;
@@ -635,27 +497,16 @@ function orderProduct(name, price) {
   const msg = encodeURIComponent(`أهلاً صحتك! 👋\n\nعايز أطلب:\n🛒 ${name}\n💰 السعر: ${price} ج\n\nمحتاج:\n1. عنوان التوصيل\n2. رقم موبايل للتأكيد`);
   window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
 }
+
 function openWA() {
   const wa = appData.settings.wa || '201507222502';
-  const a = document.createElement('a');
-  a.href = `https://wa.me/${wa}`;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  window.open(`https://wa.me/${wa}`, '_blank');
 }
+
 function openSocial(platform) {
-  event.preventDefault();
   const url = appData.settings[platform];
   if (url && url.startsWith('http')) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    window.open(url, '_blank');
   } else {
     alert('الصفحة هتكون جاهزة قريباً! 🚀');
   }
@@ -741,7 +592,7 @@ function showMsg(type, text) {
 }
 
 // ══════════════════════════════════════════════════════
-// PWA
+// PWA INSTALL PROMPT
 // ══════════════════════════════════════════════════════
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
@@ -760,24 +611,19 @@ document.getElementById('install-btn').addEventListener('click', async () => {
 // INIT
 // ══════════════════════════════════════════════════════
 async function init() {
-  // Try cache first
   const cached = localStorage.getItem('sehhtak_cache');
   if (cached) { try { appData = JSON.parse(cached); } catch(e) {} }
-  // Try fetch from JSONBin
   const mk = localStorage.getItem('sehhtak_mk');
   if (mk) { appData.settings.masterKey = mk; await fetchData(); }
   renderProducts('all');
-  // Hide loading
   setTimeout(() => document.getElementById('loading').classList.add('hide'), 800);
 }
 init();
 </script>
 
-
-
-
+<!-- PWA MANIFEST & SERVICE WORKER (INLINE) -->
 <script>
-// ── PWA MANIFEST ──────────────────────────────────────────────
+// Create manifest as Blob (inline PWA)
 const manifest = {
   name: "صحتك • Sehhtak",
   short_name: "صحتك",
@@ -788,39 +634,49 @@ const manifest = {
   background_color: "#0D1F4E",
   theme_color: "#0D1F4E",
   lang: "ar",
+  dir: "rtl",
+  categories: ["health", "medical", "shopping"],
   icons: [
-  { src: "/sehhtak/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
-  { src: "/sehhtak/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
-]
-  screenshots: [],
-  categories: ["health", "medical", "shopping"]
+    { src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSIzNiIgZmlsbD0iIzBEMUY0RSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwQUNDMSI+4pqVDjwvdGV4dD48L3N2Zz4=", sizes: "192x192", type: "image/svg+xml", purpose: "any maskable" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI4MCIgZmlsbD0iIzBEMUY0RSIvPjx0ZXh0IHg9IjI1NiIgeT0iMzIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDBBQ0MxIj7impUOwvdGV4dD48L3N2Zz4=", sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+  ]
 };
-const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-const manifestURL = URL.createObjectURL(blob);
-document.getElementById('pwa-manifest').setAttribute('href', manifestURL);
+const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+document.getElementById('pwa-manifest').href = URL.createObjectURL(manifestBlob);
 
-// ── SERVICE WORKER ─────────────────────────────────────────────
-const swCode = `
-const CACHE = 'sehhtak-v1';
-const ASSETS = ['./'];
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
-  self.clients.claim();
-});
-self.addEventListener('fetch', e => {
-  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-});
-`;
+// Service Worker registration (inline, best effort)
 if ('serviceWorker' in navigator) {
-  const swBlob = new Blob([swCode], {type: 'application/javascript'});
-  const swURL = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swURL)
-    .then(() => console.log('SW registered'))
-    .catch(e => console.log('SW error:', e));
+  const swCode = `
+    const CACHE = 'sehhtak-v1';
+    self.addEventListener('install', e => {
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      if (e.request.method !== 'GET') return;
+      e.respondWith(
+        fetch(e.request).then(response => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE).then(cache => cache.put(e.request, clone));
+          }
+          return response;
+        }).catch(() => caches.match(e.request))
+      );
+    });
+  `;
+  try {
+    const swBlob = new Blob([swCode], {type: 'application/javascript'});
+    const swURL = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swURL)
+      .then(() => console.log('✅ SW registered'))
+      .catch(e => console.log('SW note:', e.message));
+  } catch(e) { console.log('SW note:', e.message); }
 }
 </script>
-</body></html>
+
+</body>
+</html>
