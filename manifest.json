@@ -1,0 +1,28 @@
+{
+  "name": "صحتك • Sehhtak",
+  "short_name": "صحتك",
+  "description": "مستلزمات طبية أصلية — توصيل لبيتك مع استشارة صيدلي مجاناً",
+  "start_url": "/sehhtak/",
+  "scope": "/sehhtak/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0D1F4E",
+  "theme_color": "#0D1F4E",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["health", "medical", "shopping"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='192'%20height='192'%3E%3Crect%20width='192'%20height='192'%20rx='40'%20fill='%230D1F4E'/%3E%3Crect%20x='76'%20y='36'%20width='40'%20height='120'%20rx='10'%20fill='%2300ACC1'/%3E%3Crect%20x='36'%20y='76'%20width='120'%20height='40'%20rx='10'%20fill='%2300ACC1'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='512'%20height='512'%3E%3Crect%20width='512'%20height='512'%20rx='100'%20fill='%230D1F4E'/%3E%3Crect%20x='205'%20y='96'%20width='102'%20height='320'%20rx='20'%20fill='%2300ACC1'/%3E%3Crect%20x='96'%20y='205'%20width='320'%20height='102'%20rx='20'%20fill='%2300ACC1'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
