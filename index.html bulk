@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دكتور صحة وعناية ستور — رفع منتجات بالجملة</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f7fa; min-height: 100vh; }
+
+.header { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; padding: 20px 0; }
+.header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.8em; font-weight: bold; }
+.back-link { color: white; text-decoration: none; font-size: 1.1em; }
+
+.container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+
+.page-title { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; text-align: center; }
+.page-title h1 { color: #2ecc71; font-size: 2em; margin-bottom: 10px; }
+.page-title p { color: #666; font-size: 1.1em; }
+
+.step { background: white; border-radius: 15px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.step-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; }
+.step-number { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2em; }
+.step-title { font-size: 1.4em; color: #333; font-weight: bold; }
+
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+input[type="text"], input[type="password"] { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1em; background: #fafafa; }
+input:focus { outline: none; border-color: #2ecc71; background: white; }
+
+.btn { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 1.1em; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,204,113,0.4); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-secondary { background: linear-gradient(135deg, #3498db, #2980b9); }
+
+.info-box { background: #e3f2fd; border-right: 4px solid #2196f3; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+.info-box h4 { color: #1976d2; margin-bottom: 15px; }
+.info-box ul { list-style: none; }
+.info-box li { padding: 8px 0; color: #555; border-bottom: 1px solid #bbdefb; }
+.info-box li strong { color: #1976d2; display: inline-block; min-width: 120px; }
+
+.info-box.orange { background: #fff3e0; border-right-color: #ff9800; }
+.info-box.orange h4 { color: #e65100; }
+
+.tag { display: inline-block; background: #e1f5fe; color: #0288d1; padding: 3px 10px; border-radius: 5px; font-size: 0.9em; margin: 2px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+.stat-box { background: #f8f9fa; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #dee2e6; }
+.stat-number { font-size: 3em; font-weight: bold; color: #2ecc71; }
+.stat-label { color: #6c757d; font-size: 0.95em; }
+
+.drop-zone { border: 3px dashed #dee2e6; border-radius: 15px; padding: 50px; text-align: center; cursor: pointer; background: #f8f9fa; }
+.drop-zone:hover { border-color: #2ecc71; background: #f0fdf4; }
+.drop-zone-icon { font-size: 4em; margin-bottom: 15px; }
+
+.alert { padding: 20px; border-radius: 12px; margin-bottom: 25px; display: none; font-weight: 500; }
+.alert-success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+.alert-error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+.alert.show { display: block; }
+
+.footer { background: #2c3e50; color: white; padding: 30px 0; margin-top: 50px; text-align: center; }
+
+@media (max-width: 768px) {
+  .stats { grid-template-columns: 1fr; }
+  .step { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div class="logo">🏥 دكتور صحة وعناية ستور</div>
+    <a href="index.html" class="back-link">← العودة للموقع</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-title">
+    <h1>📦 رفع منتجات بالجملة</h1>
+    <p>ارفع ملف Excel فيه كل منتجاتك دفعة واحدة للموقع</p>
+  </div>
+
+  <div id="alertBox" class="alert"></div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-number">1</div>
+      <div class="step-title">إعدادات الاتصال</div>
+    </div>
+    <div class="form-group">
+      <label>🔑 JSONBin Master Key</label>
+      <input type="password" id="masterKey" placeholder="$2a$10$...">
+    </div>
+    <div class="form-group">
+      <label>📦 JSONBin Bin ID</label>
+      <input type="text" id="binId" placeholder="65a1b2c3d4e5f6g7h8i9j0">
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-number">2</div>
+      <div class="step-title">حمّل Template Excel وامتلئه</div>
+    </div>
+
+    <div class="info-box">
+      <h4>📋 الأعمدة المطلوبة في ملف Excel:</h4>
+      <ul>
+        <li><strong>A: name</strong> — اسم المنتج (مطلوب)</li>
+        <li><strong>B: desc</strong> — الوصف</li>
+        <li><strong>C: cat</strong> — الكاتيجوري (مطلوب)</li>
+        <li><strong>D: price</strong> — السعر بالجنيه (مطلوب)</li>
+        <li><strong>E: oldPrice</strong> — السعر القديم (اختياري)</li>
+        <li><strong>F: emoji</strong> — الإيموجي مثل 🩺</li>
+        <li><strong>G: badge</strong> — best / hot / new (اختياري)</li>
+        <li><strong>H: features</strong> — المميزات مفصولة بـ |</li>
+        <li><strong>I: bg</strong> — لون الخلفية</li>
+      </ul>
+    </div>
+
+    <div class="info-box orange">
+      <h4>🗂️ الكاتيجوريز المتاحة:</h4>
+      <p style="line-height: 2.2;">
+        <span class="tag">أجهزة طبية</span>
+        <span class="tag">شرائط وأجهزة سكر</span>
+        <span class="tag">أجهزة الضغط</span>
+        <span class="tag">أجهزة الأكسجين</span>
+        <span class="tag">شرائط وملحقات</span>
+        <span class="tag">سرنجات طبية</span>
+        <span class="tag">مستلزمات طبية</span>
+        <span class="tag">الدعم والمساعدة الطبية</span>
+        <span class="tag">فيتامينات وتركيبات</span>
+        <span class="tag">الصحة الجنسية</span>
+        <span class="tag">المكياج والجمال</span>
+        <span class="tag">العناية بالبشرة والجسم</span>
+        <span class="tag">العناية بالشعر</span>
+        <span class="tag">عطور وكولونيا</span>
+        <span class="tag">النظافة الشخصية</span>
+        <span class="tag">العناية بالأسنان</span>
+        <span class="tag">مزيلات العرق</span>
+        <span class="tag">الحلاقة وإزالة الشعر</span>
+        <span class="tag">فوط صحية ورقية</span>
+        <span class="tag">مستلزمات أطفال</span>
+        <span class="tag">حفاضات أطفال</span>
+        <span class="tag">حفاضات كبار السن</span>
+        <span class="tag">المنتجات الورقية</span>
+        <span class="tag">منظفات ومعطرات جو</span>
+        <span class="tag">العناية بالمنزل</span>
+        <span class="tag">أعشاب ومنتجات صحية</span>
+      </p>
+    </div>
+
+    <button class="btn btn-secondary" id="downloadTemplateBtn">⬇️ حمّل Template Excel جاهز</button>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-number">3</div>
+      <div class="step-title">ارفع ملف Excel على الموقع</div>
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+      <div class="drop-zone-icon">📊</div>
+      <p>اسحب ملف Excel هنا أو اضغط للاختيار</p>
+      <p style="color: #999; font-size: 0.9em; margin-top: 10px;">يدعم: .xlsx, .xls, .csv</p>
+      <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" style="display: none;">
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-number" id="totalProducts">0</div>
+        <div class="stat-label">إجمالي الصفوف</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="validProducts">0</div>
+        <div class="stat-label">صالحة للرفع</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="invalidProducts">0</div>
+        <div class="stat-label">ناقصة بيانات</div>
+      </div>
+    </div>
+
+    <button class="btn" id="uploadBtn">🚀 رفع المنتجات على الموقع</button>
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>دكتور صحة وعناية ستور • Doctor Health & Care Store</strong></p>
+  <p>© 2025 — جميع الحقوق محفوظة</p>
+</div>
+
+<script>
+const categoryMap = {
+  'medical': 'أجهزة طبية', 'sugar': 'شرائط وأجهزة سكر', 'pressure': 'أجهزة الضغط',
+  'oxygen': 'أجهزة الأكسجين', 'strips': 'شرائط وملحقات', 'syringes': 'سرنجات طبية',
+  'supplies': 'مستلزمات طبية', 'support': 'الدعم والمساعدة الطبية', 'vitamins': 'فيتامينات وتركيبات',
+  'sexual': 'الصحة الجنسية', 'makeup': 'المكياج والجمال', 'skin': 'العناية بالبشرة والجسم',
+  'hair': 'العناية بالشعر', 'perfume': 'عطور وكولونيا', 'hygiene': 'النظافة الشخصية',
+  'dental': 'العناية بالأسنان', 'deodorant': 'مزيلات العرق', 'shaving': 'الحلاقة وإزالة الشعر',
+  'feminine': 'فوط صحية ورقية', 'baby-sup': 'مستلزمات أطفال', 'diapers-b': 'حفاضات أطفال',
+  'diapers-a': 'حفاضات كبار السن', 'paper': 'المنتجات الورقية', 'cleaning': 'منظفات ومعطرات جو',
+  'home': 'العناية بالمنزل', 'herbs': 'أعشاب ومنتجات صحية'
+};
+
+const badgeMap = {
+  'best': '⭐ الأكثر مبيعاً', 'hot': '🔥 عرض', 'new': '✨ جديد',
+  '⭐ الأكثر مبيعاً': '⭐ الأكثر مبيعاً', '🔥 عرض': '🔥 عرض', '✨ جديد': '✨ جديد'
+};
+
+const bgMap = {
+  'green': 'أخضر طبي', 'blue': 'أزرق', 'yellow': 'أصفر', 'purple': 'بنفسجي', 'pink': 'وردي',
+  'أخضر طبي': 'أخضر طبي', 'أزرق': 'أزرق', 'أصفر': 'أصفر', 'بنفسجي': 'بنفسجي', 'وردي': 'وردي'
+};
+
+function showAlert(message, type = 'success') {
+  const alertBox = document.getElementById('alertBox');
+  alertBox.textContent = message;
+  alertBox.className = `alert alert-${type} show`;
+  setTimeout(() => { alertBox.classList.remove('show'); }, 6000);
+}
+
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('excelFileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.style.borderColor = '#2ecc71';
+  dropZone.style.background = '#f0fdf4';
+});
+dropZone.addEventListener('dragleave', () => {
+  dropZone.style.borderColor = '#dee2e6';
+  dropZone.style.background = '#f8f9fa';
+});
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.style.borderColor = '#dee2e6';
+  dropZone.style.background = '#f8f9fa';
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    fileInput.files = files;
+    handleFile(files[0]);
+  }
+});
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) handleFile(e.target.files[0]);
+});
+
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    try {
+      const data = new Uint8Array(event.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rawData = XLSX.utils.sheet_to_json(firstSheet, { defval: "" });
+      processAndValidateData(rawData);
+      showAlert(`✅ تم قراءة ${rawData.length} صف من الملف بنجاح`, 'success');
+    } catch (error) {
+      showAlert('❌ خطأ في قراءة الملف: ' + error.message, 'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function processAndValidateData(rawData) {
+  let validProducts = [];
+  let invalidCount = 0;
+
+  rawData.forEach((row, index) => {
+    if (!row.name || !row.price) {
+      invalidCount++;
+      return;
+    }
+
+    const catKey = row.cat?.toString().trim();
+    const mappedCat = categoryMap[catKey.toLowerCase()] || catKey || 'أجهزة طبية';
+    const badgeKey = row.badge?.toString().trim();
+    const mappedBadge = badgeMap[badgeKey?.toLowerCase()] || badgeMap[badgeKey] || '';
+    const bgKey = row.bg?.toString().trim();
+    const mappedBg = bgMap[bgKey?.toLowerCase()] || bgMap[bgKey] || 'أخضر طبي';
+    const features = row.features ? row.features.toString().split('|').map(f => f.trim()) : [];
+
+    validProducts.push({
+      id: Date.now() + Math.random().toString(36).substr(2, 5),
+      name: row.name.toString().trim(),
+      desc: row.desc?.toString().trim() || '',
+      cat: mappedCat,
+      price: parseFloat(row.price),
+      oldPrice: row.oldPrice ? parseFloat(row.oldPrice) : null,
+      emoji: row.emoji || '📦',
+      badge: mappedBadge,
+      features: features,
+      bg: mappedBg
+    });
+  });
+
+  document.getElementById('totalProducts').innerText = rawData.length;
+  document.getElementById('validProducts').innerText = validProducts.length;
+  document.getElementById('invalidProducts').innerText = invalidCount;
+  window.productsToUpload = validProducts;
+}
+
+document.getElementById('uploadBtn').addEventListener('click', async function() {
+  const masterKey = document.getElementById('masterKey').value.trim();
+  const binId = document.getElementById('binId').value.trim();
+  const newProducts = window.productsToUpload || [];
+
+  if (!masterKey || !binId) {
+    showAlert('⚠️ من فضلك أدخل JSONBin Master Key و Bin ID', 'error');
+    return;
+  }
+  if (newProducts.length === 0) {
+    showAlert('⚠️ لا توجد منتجات صالحة للرفع!', 'error');
+    return;
+  }
+
+  this.disabled = true;
+  this.innerText = 'جاري الرفع... ⏳';
+
+  try {
+    const fetchRes = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': masterKey }
+    });
+    if (!fetchRes.ok) throw new Error('فشل في جلب البيانات الحالية');
+    const binData = await fetchRes.json();
+    let currentData = binData.record;
+
+    if (Array.isArray(currentData)) {
+      currentData.push(...newProducts);
+    } else if (currentData && Array.isArray(currentData.products)) {
+      currentData.products.push(...newProducts);
+    } else if (currentData && typeof currentData === 'object') {
+      newProducts.forEach(p => {
+        if (!currentData[p.cat]) currentData[p.cat] = [];
+        currentData[p.cat].push(p);
+      });
+    } else {
+      currentData = newProducts;
+    }
+
+    const updateRes = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': masterKey
+      },
+      body: JSON.stringify(currentData)
+    });
+
+    if (updateRes.ok) {
+      showAlert(`✅ تم رفع ${newProducts.length} منتج بنجاح على الموقع!`, 'success');
+      window.productsToUpload = [];
+      fileInput.value = '';
+      document.getElementById('totalProducts').innerText = '0';
+      document.getElementById('validProducts').innerText = '0';
+      document.getElementById('invalidProducts').innerText = '0';
+    } else {
+      throw new Error('فشل في حفظ البيانات');
+    }
+  } catch (error) {
+    console.error(error);
+    showAlert('❌ حدث خطأ: ' + error.message, 'error');
+  } finally {
+    this.disabled = false;
+    this.innerText = '🚀 رفع المنتجات على الموقع';
+  }
+});
+
+document.getElementById('downloadTemplateBtn').addEventListener('click', function() {
+  const templateData = [
+    { name: 'ترمومتر ديجيتال', desc: 'قياس حرارة سريع', cat: 'أجهزة طبية', price: 90, oldPrice: 120, emoji: '🌡️', badge: 'hot', features: 'دقيق|سريع|ضمان', bg: 'أخضر طبي' },
+    { name: 'جهاز سكر Contour', desc: 'دقة عالية', cat: 'شرائط وأجهزة سكر', price: 420, oldPrice: 550, emoji: '🩺', badge: 'best', features: '5 ثواني|دقة عالية', bg: 'أزرق' },
+    { name: 'صابون ديتول', desc: 'حماية من الجراثيم', cat: 'النظافة الشخصية', price: 60, oldPrice: 70, emoji: '🧼', badge: '', features: '4 قطع|حماية', bg: 'أصفر' }
+  ];
+
+  const ws = XLSX.utils.json_to_sheet(templateData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Products");
+  XLSX.writeFile(wb, "Doctor_Health_Care_Template.xlsx");
+});
+</script>
+
+</body>
+</html>
